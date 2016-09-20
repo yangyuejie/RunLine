@@ -1,8 +1,8 @@
 
 var HelloWorldLayer = cc.Layer.extend({
     sprite:null,
-    curx:0,
-    cury:0,
+    curx:100,
+    cury:100,
     addX:5,
     addY:5,
 
@@ -58,7 +58,13 @@ var HelloWorldLayer = cc.Layer.extend({
         //draw.drawSegment(cc.p(0, 0), cc.p(winSize.width, winSize.height), 1, cc.color(255, 255, 255, 255));
 
 
-        draw.drawSegment(cc.p(this.curx, this.cury), cc.p(this.curx+this.addX, this.cury+this.addY), 5, cc.color(255, 0, 0, 255-this.total*5));
+        var opacity = 255-this.total;
+        if(opacity<=0){
+            opacity = 0;
+        }
+
+        var dis = Math.sqrt(this.addX*this.addX + this.addY*this.addY);
+        draw.drawSegment(cc.p(this.curx, this.cury), cc.p(this.curx+this.addX, this.cury+this.addY), dis, cc.color(255, 0, 0, opacity));
         this.curx += this.addX;
         this.cury += this.addY;
 
@@ -68,8 +74,11 @@ var HelloWorldLayer = cc.Layer.extend({
         //    this.posAry[0].removeFromParent();
         //    this.posAry.splice(0,1);
         //}
+        this.total += 5;
 
-        this.total++;
+        if(opacity==0){
+            this.unschedule(this.update);
+        }
     }
 
 });
