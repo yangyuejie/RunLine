@@ -29,6 +29,8 @@ var LevelInfor = cc.Node.extend({
        // this.changeLayOut();
         //添加按钮
         this.addStartButton();
+
+        this.addDirection();
     },
 
     //读取关卡数据信息
@@ -143,6 +145,54 @@ var LevelInfor = cc.Node.extend({
 
         var scene = cc.director.getRunningScene();
         scene.addChild(menu,100);
+    },
+
+    //添加指示方向unit
+    addDirection: function(){
+        var scene = cc.director.getRunningScene();
+        var unit = new Hexagon();
+        unit.setStateInfor(rightType);
+        unit.drowPolygon();
+        unit.setPosition(cc.p(100,100));
+        scene.addChild(unit,100);
+        unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
+    },
+
+    //监控位置
+    touchMoveBack: function(node){
+
+       var position = node.getPosition();
+
+        for(var i=0; i<lineNum; i++){
+            var array = this.itemArray[i];
+            for(var j=0; j<array.length; j++){
+                var item = array[j];
+                var dis = cc.pDistance(item.getPosition(), position);
+                if(dis < 50){
+                    item.setScale(1.1);
+                }else{
+                    item.setScale(1);
+                }
+            }
+        }
+    },
+
+    //点击结束回调
+    touchEndBack: function(node){
+
+        for(var i=0; i<lineNum; i++){
+            var array = this.itemArray[i];
+            for(var j=0; j<array.length; j++){
+                var item = array[j];
+                if(item.getScale()>1){
+                    node.removeFromParent();
+                    node.setPosition(cc.p(0, 0));
+                    node.setRotation(node.getRotation()-30);
+                    item.addChild(node);
+                    break;
+                }
+            }
+        }
     }
 
 });
