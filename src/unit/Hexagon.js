@@ -12,6 +12,9 @@ var Hexagon = cc.Node.extend({
     //二次方向
     branchDir:[],
 
+    //二次方向id
+    direId:0,
+
     //关联指针
     left:null,
     right:null,
@@ -122,12 +125,20 @@ var Hexagon = cc.Node.extend({
     },
 
     //获取二次方向数组信息
-    getSecondDir: function(index){
+    getSecondDir: function(direID){
 
-        if(this.branchDir.length>index-1){
-            return this.branchDir[index];
+        for(var i=0; i<this.branchDir.length; i++){
+            var dirItem = this.branchDir[i];
+            if(dirItem.lineid==direID){
+                return dirItem.direction;
+            }
         }
-        return null;
+        return nonDir;
+    },
+
+    //设置二次方向ID
+    setDirectId : function(id){
+        this.direId = id;
     },
 
     //方块移动动作
@@ -147,8 +158,17 @@ var Hexagon = cc.Node.extend({
     //获取关联方向item信息
     getReleateInfor: function(){
 
+        if(this.attachItem!=null){
+            this.attachItem.setSecondDir();
+        }
+
+        var dire = this.direState;
         var item = null;
-        switch(this.direState){
+        if(this.direId!=0){
+            dire = this.getSecondDir(this.direId);
+        }
+
+        switch(dire){
             case nonDir:
                 break;
             case leftState:
@@ -174,17 +194,27 @@ var Hexagon = cc.Node.extend({
         if(item==null){
             return null;
         }
-        if(item.getDirection()==this.getDirection()){
-            return item;
-        }else{
-            return null;
-        }
+        //if(item.getDirection()==this.getDirection()){
+        //    return item;
+        //}else{
+        //    return null;
+        //}
+        return item;
+
     },
 
     //缩放动作
     ScaleBackAction: function(){
         var seq = cc.sequence(cc.scaleTo(0.25,1.1),cc.scaleTo(0.25,1));
         this.runAction(seq);
+
+        //if(this.attachItem!=null){
+        //    this.attachItem.setSecondDir();
+        //
+        //    var dire = this.getSecondDir(this.direId);
+        //    this.direId = dire;
+        //}
+
     },
 
     //还原方块状态

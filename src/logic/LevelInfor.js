@@ -151,9 +151,9 @@ var LevelInfor = cc.Node.extend({
     addDirection: function(){
         var scene = cc.director.getRunningScene();
         var unit = new DirHexagon();
-        unit.setStateInfor(rightType);
+        unit.setStateInfor(lUpType);
         unit.drowPolygon();
-        unit.setStepNum(2);
+        unit.setStepNum(4);
         unit.setPosition(cc.p(100,100));
         unit.setTypeInfor();
         scene.addChild(unit,100);

@@ -54,7 +54,7 @@ var DirHexagon = Hexagon.extend({
             label.setString("2");
             label.setFontSize(60);
             label.setColor(cc.color(173, 255, 47));
-            label.setRotation(-30+rotate);
+            label.setRotation(-30-rotate);
             label.setOpacity(80);
             this.drawNode.addChild(label);
         }
@@ -125,11 +125,13 @@ var DirHexagon = Hexagon.extend({
     //设置第二方向
     setSecondDir: function(){
 
+        var item = this.getParent();
+        item.setDirectId(lineID);
         for(var i=0; i<this.stepNum; i++){
 
             var dir = nonDir;
             var target = null;
-            var item = this.getParent();
+
             switch(this.itemType){
                 case leftType:
                     target = item.left;
@@ -162,7 +164,14 @@ var DirHexagon = Hexagon.extend({
                 direction: dir
             };
 
+            if(target==null){
+                return;
+            }
             target.addSecondDir(lineDir);
+            target.setDirectId(lineID);
+            target.setColorState(pathColor);
+            target.drowPolygon();
+            item = target;
         }
 
         lineID++;
@@ -171,4 +180,4 @@ var DirHexagon = Hexagon.extend({
 });
 
 //线路ID
-var lineID = 0;
+var lineID = 2;
