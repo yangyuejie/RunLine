@@ -150,10 +150,12 @@ var LevelInfor = cc.Node.extend({
     //添加指示方向unit
     addDirection: function(){
         var scene = cc.director.getRunningScene();
-        var unit = new Hexagon();
+        var unit = new DirHexagon();
         unit.setStateInfor(rightType);
         unit.drowPolygon();
+        unit.setStepNum(2);
         unit.setPosition(cc.p(100,100));
+        unit.setTypeInfor();
         scene.addChild(unit,100);
         unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
     },
@@ -189,6 +191,8 @@ var LevelInfor = cc.Node.extend({
                     node.setPosition(cc.p(0, 0));
                     node.setRotation(node.getRotation()-30);
                     item.addChild(node);
+                    item.setAttachItem(node);
+                    node.setSecondDir();
                     break;
                 }
             }

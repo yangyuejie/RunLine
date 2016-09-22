@@ -6,6 +6,12 @@ var Hexagon = cc.Node.extend({
 
     drawNode: null,
 
+    //附加unit
+    attachItem:null,
+
+    //二次方向
+    branchDir:[],
+
     //关联指针
     left:null,
     right:null,
@@ -65,96 +71,7 @@ var Hexagon = cc.Node.extend({
         this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
         this.addChild(this.drawNode);
 
-        //设置类型属性信息
-        this.setTypeInfor();
-
     },
-
-    //设置类型属性信息
-    setTypeInfor: function(){
-
-        var str = "";
-        var rotate = -1;
-        switch(this.itemType){
-            case normType:
-            case targetType:
-                break;
-            case leftType:
-                rotate = -180;
-                str = "L";
-                break;
-            case rightType:
-                rotate = 0;
-                str = "R";
-                break;
-            case lUpType:
-                rotate = -120;
-                str = "LU";
-                break;
-            case rUpType:
-                rotate = -60;
-                str = "RU";
-                break;
-            case lDownType:
-                rotate = 120;
-                str = "LD";
-                break;
-            case rDownType:
-                rotate = 60;
-                str = "RD";
-                break;
-        }
-
-        if(rotate!=-1){
-
-            //添加创建方向指示标示
-            this.addTipLine();
-            this.setRotation(30+rotate);
-
-            //var self = this;
-            //// 屏蔽下层事件
-            //cc.eventManager.addListener({
-            //    event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            //    onTouchBegan: function(touch, event){
-            //        var point = touch.getLocation();
-            //        point = self.drawNode.convertToNodeSpace(point);
-            //        //判断是否在点击范围之内
-            //        var rect = cc.rect(-1.7320508075689*50/2,-40,1.7320508075689*50,80);
-            //        if(cc.rectContainsPoint(rect,point)){
-            //            return true;
-            //        }
-            //        return false;
-            //    },
-            //    swallowTouches: false
-            //}, this.drawNode);
-        }
-    },
-
-    //添加指示线
-    addTipLine: function(){
-
-        //直线
-        var draw = new cc.DrawNode();
-        draw.drawSegment(cc.p(0, 0), cc.p(0, 30), 2, cc.color(255, 0, 0, 255));
-        this.addChild(draw);
-        draw.setRotation(60);
-
-        //小三角形
-        var point = [];
-        point[0] = cc.p(0,-5);
-        point[1] = cc.p(0,5);
-        point[2] = cc.p(10,0);
-        var drawNode = cc.DrawNode.create();
-        drawNode.drawPoly(point, cc.color(255, 0, 0, 255), 4, cc.color(255, 0, 0, 255));
-        this.addChild(drawNode);
-        drawNode.setRotation(-30);
-        drawNode.setPosition(cc.p(20,11));
-
-        //添加方向label
-
-    },
-
-
 
     //添加球
     addCircle: function(){
@@ -187,6 +104,30 @@ var Hexagon = cc.Node.extend({
     //获取颜色状态
     getColorState: function(){
         return this.colorState;
+    },
+
+    //设置附加unit
+    setAttachItem: function(item){
+        this.attachItem = item;
+    },
+
+    //获取附加unit
+    getAttachItem: function(){
+        return this.attachItem;
+    },
+
+    //设置二次方向信息
+    addSecondDir: function(dirction){
+        this.branchDir.push(dirction);
+    },
+
+    //获取二次方向数组信息
+    getSecondDir: function(index){
+
+        if(this.branchDir.length>index-1){
+            return this.branchDir[index];
+        }
+        return null;
     },
 
     //方块移动动作
@@ -252,47 +193,12 @@ var Hexagon = cc.Node.extend({
         this.setStateInfor(normType);
         this.setColorState(norColor);
         this.drowPolygon();
-    },
+        if(this.attachItem!=null){
+            this.attachItem.removeFromParent();
+            this.attachItem = null;
 
-    //注册触摸事件
-    addTouchEvent: function(moveBack, endBack){
-
-        var tmpPoint;
-        var self = this;
-        // 屏蔽下层事件
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event){
-                var point = touch.getLocation();
-                var converP = self.drawNode.convertToNodeSpace(point);
-                //判断是否在点击范围之内
-                var rect = cc.rect(-1.7320508075689*50/2,-40,1.7320508075689*50,80);
-                if(cc.rectContainsPoint(rect,converP)){
-                    cc.log("touchBegan.......");
-                    tmpPoint = point;
-                    self.setScale(1.1);
-                    return true;
-                }
-                return false;
-            },
-            onTouchMoved: function(touch, event){
-                var point = touch.getLocation();
-                var x = self.getPositionX()+point.x-tmpPoint.x;
-                var y = self.getPositionY()+point.y-tmpPoint.y;
-                self.setPosition(cc.p(x,y));
-                tmpPoint = point;
-
-                moveBack(self);
-            },
-            onTouchEnded: function(touch, event){
-                endBack(self);
-                self.setScale(1);
-            },
-            swallowTouches: false
-        }, this.drawNode);
-
+        }
     }
-
 
 });
 
