@@ -9,7 +9,7 @@ var Checkpoint = {
     //加载关卡数值信息
     loadCardData: function(loadCallback){
 
-        //管卡单元格id信息数组
+        //关卡单元格id信息数组
         this.levelData = [];
 
         var res = [];
@@ -24,10 +24,17 @@ var Checkpoint = {
                 var itemArr = array[i].split(",");
                 inforArr.push(itemArr);
             }
-           // cc.log(inforArr);
             self.levelData.push(inforArr);
            // loadCallback(array);
+            //加载item数据信息
+            self.loadItemDataBack(function(){
+                loadCallback();
+            });
         });
+    },
+
+    //加载item数据信息
+    loadItemDataBack: function(backFun){
 
         cc.loader.load("res/data/unitInfor.txt", function(err,array){
 
@@ -57,6 +64,9 @@ var Checkpoint = {
                 //单元格信息数组
                 ItemInforList.shared().addObject(item);
             }
+
+            backFun();
         });
     }
+
 };
