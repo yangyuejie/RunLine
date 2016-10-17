@@ -38,7 +38,6 @@ var RelationItem = cc.Node.extend({
             }
             for(var i=-indexX; i<=indexY; i++){
                 var hexagon = new Hexagon();
-                //hexagon.drowPolygon();
                 var addX = 0;
                 if(indexX==indexY){
                     addX = 0;
@@ -113,16 +112,5 @@ var RelationItem = cc.Node.extend({
     getItemArr: function(){
         return this.itemArray;
     }
-
-    ////展示路径信息
-    //showPathItems: function(){
-    //    var time = 1;
-    //    var item = this.itemArray[4][0];
-    //    while(item){
-    //        item.showPathItem(time*0.2);
-    //        item = item.right;
-    //        time++;
-    //    }
-    //}
 
 });

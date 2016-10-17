@@ -41,8 +41,7 @@ var LevelInfor = cc.Node.extend({
         if(level==null){
             level = 0;
         }
-        var array = this.levelData[level];
-        array = this.setDataArra(array);
+        var array = leveDataArr[level];
 
         for(var i=0; i<array.length; i++){
             if(i>=9){
@@ -51,72 +50,20 @@ var LevelInfor = cc.Node.extend({
             for(var j=0; j<array[i].length; j++){
 
                 var data = array[i][j];
-                data = parseInt(data);
                 //判断结束标志
-                if(data==-1){
+                if(data==""){
                     break;
                 }
 
+                cc.log(data);
+                cc.log("i = " + i);
+                cc.log("j = " + j);
                 var item = this.itemArray[i][j];
-                //设置关联方向标志
-                if(data>=1&&data<=6){
-                    item.setDirection(data);
-                }
-
-                //设置目标位置信息
-                if(data>=101&&data<200){
-                    var state = parseInt(data/100);
-                    var color = parseInt((data-100)/10);
-                    var path = parseInt((data-100)%10);
-                    item.setStateInfor(state);
-                    item.setDirection(path);
-                    item.setColorState(color);
-
-                    var hexagon = new Hexagon();
-                    hexagon.setColorState(attColor);
-                    hexagon.setDirection(path);
-                    hexagon.drowPolygon();
-                    hexagon.setRotation(0);
-                    item.addChild(hexagon);
-                    this.targetArray.push(hexagon);
-
-                }else if(data<100){
-                    item.setDirection(parseInt(data%10));
-                    item.setColorState(parseInt(data/10));
-                    item.setStateInfor(0);
-                }
+                //设置单元格数据信息
+                item.initItemInfor(data);
                 item.drowPolygon();
             }
         }
-    },
-
-    //处理文件信息
-    setDataArra: function(array){
-
-        var dataArray = [];
-        var lineArr = [];
-        var elem = "";
-        var ifAdd = false;
-        for(var i=0; i<array.length; i++){
-
-            var item = array[i];
-            if(item == " "){
-                if(!ifAdd){
-                    if(elem=="-1"){
-                        dataArray.push(lineArr);
-                        lineArr = [];
-                    }else{
-                        lineArr.push(elem);
-                    }
-                    elem = "";
-                    ifAdd = true;
-                }
-            }else{
-                ifAdd = false;
-                elem += item;
-            }
-        }
-        return dataArray;
     },
 
     //更改布局页面信息

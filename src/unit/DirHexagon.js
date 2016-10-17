@@ -10,6 +10,8 @@ var DirHexagon = Hexagon.extend({
         this._super();
     },
 
+
+
     //设置移动次数
     setStepNum: function(stepNum){
         this.stepNum = stepNum;

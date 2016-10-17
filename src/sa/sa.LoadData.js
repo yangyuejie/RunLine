@@ -12,9 +12,6 @@ sa.LoadScene = cc.Node.extend({
 
 sa.LoadScene.preload = function(backFun){
 
-    //关卡单元格id信息数组
-    var levelData = [];
-
     var res = [];
     for(var i=1; i<cardNum+1; i++){
         res.push("res/data/level_"+i+".txt");
@@ -27,7 +24,7 @@ sa.LoadScene.preload = function(backFun){
             var itemArr = array[i].split(",");
             inforArr.push(itemArr);
         }
-        levelData.push(inforArr);
+        leveDataArr.push(inforArr);
         //加载item数据信息
 
         cc.loader.load("res/data/unitInfor.txt", function (err, array) {
@@ -59,7 +56,7 @@ sa.LoadScene.preload = function(backFun){
                 ItemInforList.shared().addObject(item);
             }
 
-            backFun(levelData);
+            backFun(leveDataArr);
         });
 
     });

@@ -38,6 +38,13 @@ var Hexagon = cc.Node.extend({
         this.setRotation(30);
     },
 
+    //设置item数据信息
+    initItemInfor: function(itemKey){
+        var item = ItemInforList.shared().getObject(itemKey);
+
+        cc.log(item);
+    },
+
     //绘制多边形
     drowPolygon: function(){
 
