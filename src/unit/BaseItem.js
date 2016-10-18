@@ -19,6 +19,8 @@ var BaseItem = cc.Node.extend({
     rotate_speed:0,
     //关联位置
     relate_pos:"null",
+    //是否基础方块
+    ifBaseItem:true,
     //是否阻挡
     ifStop: false,
     //是否目标
@@ -36,7 +38,6 @@ var BaseItem = cc.Node.extend({
 
     //初始化数据
     initDataInfor: function(data){
-        //var data = item.getDataArr();
         this.setItemID(data[0]);
         this.setRouteID(data[1]);
         this.setMoveDir(data[2]);
@@ -44,11 +45,12 @@ var BaseItem = cc.Node.extend({
         this.setRotateDir(data[4]);
         this.setMoveSpeed(data[5]);
         this.setRelatePos(data[6]);
+        this.setIfBaseItem(data[7]);
         this.setIfStop(data[7]);
-        this.setIfTarget(data[8]);
-        this.setIfChangeDir(data[9]);
-        this.setIfDisplay(data[10]);
-        this.setItemColor(data[11]);
+        this.setIfTarget(data[9]);
+        this.setIfChangeDir(data[10]);
+        this.setIfDisplay(data[11]);
+        this.setItemColor(data[12]);
     },
 
     //item id
@@ -72,7 +74,7 @@ var BaseItem = cc.Node.extend({
         this.move_dir = move_dir;
     },
 
-    getMoveDir: function(move_dir){
+    getMoveDir: function(){
         return this.move_dir;
     },
 
@@ -88,7 +90,7 @@ var BaseItem = cc.Node.extend({
         this.rotate_dir = rotate_dir;
     },
 
-    getRotateDir: function(rotate_dir){
+    getRotateDir: function(){
         return this.rotate_dir;
     },
 
@@ -104,8 +106,20 @@ var BaseItem = cc.Node.extend({
         this.relate_pos = relate_pos;
     },
 
-    getRelatePos: function(relate_pos){
+    getRelatePos: function(){
         return this.relate_pos;
+    },
+
+    setIfBaseItem: function(ifBase){
+        if(ifBase=="FALSE"){
+            this.ifBaseItem = false;
+        }else{
+            this.ifBaseItem = true;
+        }
+    },
+
+    getIfBaseItem: function(){
+        return this.ifBaseItem;
     },
 
     setIfStop: function(ifStop){
@@ -128,7 +142,7 @@ var BaseItem = cc.Node.extend({
         }
     },
 
-    getIfTarget: function(ifTarget){
+    getIfTarget: function(){
         return this.ifTarget;
     },
 
@@ -140,8 +154,7 @@ var BaseItem = cc.Node.extend({
         }
     },
 
-    getIfChangeDir: function(ifChangeDir){
-
+    getIfChangeDir: function(){
         return this.ifChangeDir;
     },
 
@@ -160,6 +173,10 @@ var BaseItem = cc.Node.extend({
     setItemColor: function(color){
         var array = color.split("\\");
         this.itemColor = cc.color(array[0],array[1],array[2],array[3]);
+    },
+
+    getItemColor: function(){
+        return this.itemColor;
     }
 
 });

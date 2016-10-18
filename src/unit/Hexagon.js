@@ -4,10 +4,8 @@
 
 var Hexagon = BaseItem.extend({
 
-    drawNode: null,
-
     //附加unit
-    attachItem:null,
+    attachArr:[],
 
     //二次方向
     branchDir:[],
@@ -29,9 +27,6 @@ var Hexagon = BaseItem.extend({
     //关联方向
     direState:nonDir,
 
-    //颜色状态
-    colorState: norColor,
-
     ctor:function () {
 
         this._super();
@@ -48,11 +43,12 @@ var Hexagon = BaseItem.extend({
     //绘制多边形
     drowPolygon: function(){
 
-        if( this.drawNode){
-            this.drawNode.removeFromParent();
+        //判断是否基础方块
+        if( !this.getIfBaseItem() ){
+
         }
         //创建DrawNode
-        this.drawNode = cc.DrawNode.create();
+        var drawNode = cc.DrawNode.create();
 
         var point1 = [];
         point1[0] = cc.p(-radius/2, 0);
@@ -62,25 +58,11 @@ var Hexagon = BaseItem.extend({
         point1[4] = cc.p(1/2*radius/2, 1.7320508075689/2*radius/2);
         point1[5] = cc.p(-1/2*radius/2, 1.7320508075689/2*radius/2);
 
-        var color;
-        switch(this.colorState){
-            case norColor:
-                color = cc.color(100, 100, 100, 100);
-                break;
-            case pathColor:
-                color = cc.color(184, 134, 11, 100);
-                break;
-            case attColor:
-                color = cc.color(255, 0, 0, 255);
-                break;
-            case dirColor:
-                color = cc.color(0, 255, 100, 255);
-                break;
-        }
-
-        this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
-        this.addChild(this.drawNode);
-
+        //基础信息
+        var data = ItemInforList.shared().getObject("100");
+        var color = this.getItemColor();
+        drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
+        this.addChild(drawNode);
     },
 
     //添加球
@@ -106,24 +88,14 @@ var Hexagon = BaseItem.extend({
         this.itemType = state;
     },
 
-    //设置颜色状态
-    setColorState: function(color){
-        this.colorState = color;
-    },
-
-    //获取颜色状态
-    getColorState: function(){
-        return this.colorState;
-    },
-
     //设置附加unit
     setAttachItem: function(item){
-        this.attachItem = item;
+        this.attachArr.push(item);
     },
 
     //获取附加unit
     getAttachItem: function(){
-        return this.attachItem;
+        return this.attachArr;
     },
 
     //设置二次方向信息
@@ -157,8 +129,8 @@ var Hexagon = BaseItem.extend({
             dire.addChild(this);
             dire.ScaleBackAction();
 
-            //还原状态
-            cube.recoverCube();
+            //移动到下一个方块
+
         }
     },
 
@@ -201,11 +173,6 @@ var Hexagon = BaseItem.extend({
         if(item==null){
             return null;
         }
-        //if(item.getDirection()==this.getDirection()){
-        //    return item;
-        //}else{
-        //    return null;
-        //}
         return item;
 
     },
@@ -215,26 +182,6 @@ var Hexagon = BaseItem.extend({
         var seq = cc.sequence(cc.scaleTo(0.25,1.1),cc.scaleTo(0.25,1));
         this.runAction(seq);
 
-        //if(this.attachItem!=null){
-        //    this.attachItem.setSecondDir();
-        //
-        //    var dire = this.getSecondDir(this.direId);
-        //    this.direId = dire;
-        //}
-
-    },
-
-    //还原方块状态
-    recoverCube: function(){
-        this.setDirection(nonDir);
-        this.setStateInfor(normType);
-        this.setColorState(norColor);
-        this.drowPolygon();
-        if(this.attachItem!=null){
-            this.attachItem.removeFromParent();
-            this.attachItem = null;
-
-        }
     }
 
 });
