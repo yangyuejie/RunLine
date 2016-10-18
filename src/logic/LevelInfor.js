@@ -6,8 +6,6 @@ var LevelInfor = cc.Node.extend({
 
     //关卡信息
     itemArray:[],
-    //关卡数值信息
-    levelData:[],
 
     //目标对象
     targetArray: [],
@@ -23,8 +21,7 @@ var LevelInfor = cc.Node.extend({
     },
 
     //关卡数值信息
-    setLevelData: function(array){
-        this.levelData = array;
+    setLevelData: function(){
         this.setDataInfor();
        // this.changeLayOut();
         //添加按钮
@@ -41,23 +38,14 @@ var LevelInfor = cc.Node.extend({
         if(level==null){
             level = 0;
         }
-        var array = leveDataArr[level];
+        var array = ItemInforList.shared().getLevelData(level);
 
         for(var i=0; i<array.length; i++){
             if(i>=9){
                 break;
             }
             for(var j=0; j<array[i].length; j++){
-
                 var data = array[i][j];
-                //判断结束标志
-                if(data==""){
-                    break;
-                }
-
-                cc.log(data);
-                cc.log("i = " + i);
-                cc.log("j = " + j);
                 var item = this.itemArray[i][j];
                 //设置单元格数据信息
                 item.initItemInfor(data);

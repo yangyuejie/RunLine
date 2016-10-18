@@ -31,6 +31,6 @@ var lDownState = 5;
 var rDownState = 6;
 
 //关卡数量
-var cardNum = 1;
+var radius = 75;
 
-var leveDataArr = [];
+var cardNum = 1;

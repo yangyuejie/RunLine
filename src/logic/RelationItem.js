@@ -43,13 +43,13 @@ var RelationItem = cc.Node.extend({
                     addX = 0;
                 }else{
                     if(topHalf){
-                        addX = -50;
+                        addX = -radius/2;
                     }else{
-                        addX = 50;
+                        addX = radius/2;
                     }
 
                 }
-                hexagon.setPosition(cc.p(size.width/2-addX-100*i,size.height/2+highNum*100*1.7320508075689/2));
+                hexagon.setPosition(cc.p(size.width/2-addX-radius*i,size.height/2+highNum*radius*1.7320508075689/2));
                 this.addChild(hexagon);
                 array.push(hexagon);
             }

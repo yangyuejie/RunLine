@@ -2,7 +2,7 @@
  * Created by yang on 2016/8/28.
  */
 
-var Hexagon = cc.Node.extend({
+var Hexagon = BaseItem.extend({
 
     drawNode: null,
 
@@ -41,8 +41,8 @@ var Hexagon = cc.Node.extend({
     //设置item数据信息
     initItemInfor: function(itemKey){
         var item = ItemInforList.shared().getObject(itemKey);
-
-        cc.log(item);
+        //初始化基础属性信息
+        this.initDataInfor(item);
     },
 
     //绘制多边形
@@ -55,12 +55,12 @@ var Hexagon = cc.Node.extend({
         this.drawNode = cc.DrawNode.create();
 
         var point1 = [];
-        point1[0] = cc.p(-50, 0);
-        point1[1] = cc.p(-1/2*50, -1.7320508075689/2*50);
-        point1[2] = cc.p(1/2*50, -1.7320508075689/2*50);
-        point1[3] = cc.p(50, 0);
-        point1[4] = cc.p(1/2*50, 1.7320508075689/2*50);
-        point1[5] = cc.p(-1/2*50, 1.7320508075689/2*50);
+        point1[0] = cc.p(-radius/2, 0);
+        point1[1] = cc.p(-1/2*radius/2, -1.7320508075689/2*radius/2);
+        point1[2] = cc.p(1/2*radius/2, -1.7320508075689/2*radius/2);
+        point1[3] = cc.p(radius/2, 0);
+        point1[4] = cc.p(1/2*radius/2, 1.7320508075689/2*radius/2);
+        point1[5] = cc.p(-1/2*radius/2, 1.7320508075689/2*radius/2);
 
         var color;
         switch(this.colorState){
