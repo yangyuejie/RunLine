@@ -166,13 +166,13 @@ var BaseItem = cc.Node.extend({
         }
     },
 
-    getIfDisplay: function(ifDisplay){
+    getIfDisplay: function(){
         return this.ifDisplay;
     },
 
     setItemColor: function(color){
         var array = color.split("\\");
-        this.itemColor = cc.color(array[0],array[1],array[2],array[3]);
+        this.itemColor = cc.color(parseInt(array[0]),parseInt(array[1]),parseInt(array[2]),parseInt(array[3]));
     },
 
     getItemColor: function(){

@@ -38,6 +38,7 @@ var RelationItem = cc.Node.extend({
             }
             for(var i=-indexX; i<=indexY; i++){
                 var hexagon = new Hexagon();
+                hexagon.initBaseItem();
                 var addX = 0;
                 if(indexX==indexY){
                     addX = 0;

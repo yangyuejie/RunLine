@@ -171,7 +171,6 @@ var DirHexagon = Hexagon.extend({
             }
             target.addSecondDir(lineDir);
             target.setDirectId(lineID);
-            target.setColorState(pathColor);
             target.drowPolygon();
             item = target;
         }

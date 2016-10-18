@@ -13,6 +13,8 @@ var Hexagon = BaseItem.extend({
     //二次方向id
     direId:0,
 
+    drawNode: null,
+
     //关联指针
     left:null,
     right:null,
@@ -33,22 +35,30 @@ var Hexagon = BaseItem.extend({
         this.setRotation(30);
     },
 
+    //初始化基础方块信息
+    initBaseItem: function(){
+        var data = ItemInforList.shared().getObject("100");
+        this.initDataInfor(data);
+    },
+
     //设置item数据信息
     initItemInfor: function(itemKey){
-        var item = ItemInforList.shared().getObject(itemKey);
+        var data = ItemInforList.shared().getObject(itemKey);
+        var item = new Hexagon();
         //初始化基础属性信息
-        this.initDataInfor(item);
+        item.initDataInfor(data);
+        if( !item.getIfBaseItem() ){
+            item.setRotation(0);
+            item.drowPolygon();
+            this.addChild(item);
+        }
+
     },
 
     //绘制多边形
     drowPolygon: function(){
-
-        //判断是否基础方块
-        if( !this.getIfBaseItem() ){
-
-        }
         //创建DrawNode
-        var drawNode = cc.DrawNode.create();
+        this.drawNode = cc.DrawNode.create();
 
         var point1 = [];
         point1[0] = cc.p(-radius/2, 0);
@@ -59,10 +69,9 @@ var Hexagon = BaseItem.extend({
         point1[5] = cc.p(-1/2*radius/2, 1.7320508075689/2*radius/2);
 
         //基础信息
-        var data = ItemInforList.shared().getObject("100");
         var color = this.getItemColor();
-        drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
-        this.addChild(drawNode);
+        this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
+        this.addChild( this.drawNode);
     },
 
     //添加球
@@ -185,12 +194,3 @@ var Hexagon = BaseItem.extend({
     }
 
 });
-
-
-
-
-
-
-
-
-
