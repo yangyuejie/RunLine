@@ -51,8 +51,13 @@ var Hexagon = BaseItem.extend({
             item.setRotation(0);
             item.drowPolygon();
             this.addChild(item);
+            //添加到数组
+            this.attachArr.push(item);
+            //判断是否目标对象
+            if(this.getIfTarget()){
+                ItemInforList.shared().addTargetInfo(item);
+            }
         }
-
     },
 
     //绘制多边形
@@ -80,16 +85,6 @@ var Hexagon = BaseItem.extend({
         var dn = new cc.DrawNode();
         dn.drawCircle(cc.p(0,0), 30, 360, 100, false, cc.color(255, 0, 0));
         this.addChild(dn);
-    },
-
-    //关联方向信息
-    setDirection: function(dir){
-        this.direState = dir;
-    },
-
-    //获取关联方向标志
-    getDirection: function(){
-        return this.direState;
     },
 
     //设置状态信息
@@ -132,7 +127,7 @@ var Hexagon = BaseItem.extend({
     //方块移动动作
     moveToTarget: function(){
         var cube = this.getParent();
-        var dire = cube.getReleateInfor();
+        var dire = cube.getReleateInfor(this);
         if(dire!=null){
             this.removeFromParent();
             dire.addChild(this);
@@ -144,7 +139,11 @@ var Hexagon = BaseItem.extend({
     },
 
     //获取关联方向item信息
-    getReleateInfor: function(){
+    getReleateInfor: function(target){
+
+        //目标路径ID
+        var routeId = target.getRouteID();
+
 
         if(this.attachItem!=null){
             this.attachItem.setSecondDir();

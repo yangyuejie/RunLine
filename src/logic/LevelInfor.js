@@ -33,6 +33,7 @@ var LevelInfor = cc.Node.extend({
     //读取关卡数据信息
     setDataInfor: function(){
 
+        ItemInforList.shared().removeTarget();
         //获取关卡
         var level = cc.sys.localStorage.getItem("level");
         if(level==null){
@@ -59,8 +60,9 @@ var LevelInfor = cc.Node.extend({
         var scene = cc.director.getRunningScene();
         var self = this;
         scene.schedule(function(dt){
-            for(var i=0; i<self.targetArray.length; i++){
-                self.targetArray[i].moveToTarget();
+            var array = ItemInforList.shared().getTargetArr();
+            for(var i=0; i<array.length; i++){
+                array[i].moveToTarget();
             }
         },1);
     },
