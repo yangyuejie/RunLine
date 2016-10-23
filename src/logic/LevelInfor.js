@@ -7,9 +7,6 @@ var LevelInfor = cc.Node.extend({
     //关卡信息
     itemArray:[],
 
-    //目标对象
-    targetArray: [],
-
     ctor:function () {
         this._super();
 
@@ -127,7 +124,6 @@ var LevelInfor = cc.Node.extend({
                     node.removeFromParent();
                     node.setPosition(cc.p(0, 0));
                     node.setRotation(node.getRotation()-30);
-                    item.addChild(node);
                     item.setAttachItem(node);
                     node.setSecondDir();
                     break;

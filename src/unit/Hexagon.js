@@ -32,6 +32,7 @@ var Hexagon = BaseItem.extend({
     ctor:function () {
 
         this._super();
+        this.attachArr = [];
         this.setRotation(30);
     },
 
@@ -47,14 +48,18 @@ var Hexagon = BaseItem.extend({
         var item = new Hexagon();
         //初始化基础属性信息
         item.initDataInfor(data);
+
         if( !item.getIfBaseItem() ){
             item.setRotation(0);
             item.drowPolygon();
-            this.addChild(item);
+
+            //添加子方块
+            item.addSubItem();
+
             //添加到数组
-            this.attachArr.push(item);
+            this.setAttachItem(item);
             //判断是否目标对象
-            if(this.getIfTarget()){
+            if(item.getIfTarget()){
                 ItemInforList.shared().addTargetInfo(item);
             }
         }
@@ -77,6 +82,10 @@ var Hexagon = BaseItem.extend({
         var color = this.getItemColor();
         this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
         this.addChild( this.drawNode);
+
+        //var subItem = new SubItem();
+        //subItem.drowCircular();
+        //this.drawNode.addChild(subItem);
     },
 
     //添加球
@@ -95,11 +104,20 @@ var Hexagon = BaseItem.extend({
     //设置附加unit
     setAttachItem: function(item){
         this.attachArr.push(item);
+        this.addChild(item);
     },
 
     //获取附加unit
     getAttachItem: function(){
         return this.attachArr;
+    },
+
+    //移除附加unit
+    removeAttachItem: function(index){
+
+        var target = this.attachArr[index];
+        target.removeFromParent();
+        this.attachArr.splice(index,1);
     },
 
     //设置二次方向信息
@@ -129,60 +147,92 @@ var Hexagon = BaseItem.extend({
         var cube = this.getParent();
         var dire = cube.getReleateInfor(this);
         if(dire!=null){
-            this.removeFromParent();
-            dire.addChild(this);
+            //移除目标方块
+            cube.removeTarget(this);
+            //添加目标方块
+            dire.setAttachItem(this);
+            //执行动作
             dire.ScaleBackAction();
-
-            //移动到下一个方块
-
         }
     },
 
     //获取关联方向item信息
     getReleateInfor: function(target){
 
-        //目标路径ID
-        var routeId = target.getRouteID();
+        //获取移动方向
+        this.judgeChangeDir(target);
+        var dirction = target.getMoveDir();
 
-
-        if(this.attachItem!=null){
-            this.attachItem.setSecondDir();
-        }
-
-        var dire = this.direState;
         var item = null;
-        if(this.direId!=0){
-            dire = this.getSecondDir(this.direId);
-        }
-
-        switch(dire){
-            case nonDir:
-                break;
-            case leftState:
+        switch (dirction){
+            case "left":
                 item = this.left;
                 break;
-            case rightState:
+            case "right":
                 item = this.right;
                 break;
-            case lUpState:
+            case "lUp":
                 item = this.lUp;
                 break;
-            case rUpState:
+            case "rUp":
                 item = this.rUp;
                 break;
-            case lDownState:
+            case "lDown":
                 item = this.lDown;
                 break;
-            case rDownState:
+            case "rDown":
                 item = this.rDown;
                 break;
         }
 
-        if(item==null){
-            return null;
+        if(item!=null&&item.judgeRouteId(target)){
+            return item;
         }
-        return item;
+        return null;
+    },
 
+    //判定目标对象路径id
+    judgeRouteId: function(item){
+        var array = this.getAttachItem();
+        for(var i=0; i<array.length; i++){
+            if(item.getRouteID()==array[i].getRouteID()){
+                return true;
+            }
+        }
+        return false;
+    },
+
+    //移除目标方块对象
+    removeTarget: function(item){
+        var array = this.getAttachItem();
+        for(var i=0; i<array.length; i++){
+            if(item.getRouteID()==array[i].getRouteID()){
+                this.removeAttachItem(i);
+                i--;
+            }
+        }
+    },
+
+    //判断是否更改方向
+    judgeChangeDir: function(target){
+        var array = this.getAttachItem();
+        for(var i=0; i<array.length; i++){
+            if(array[i].getIfChangeDir()){
+                target.setMoveDir(array[i].getMoveDir());
+                break;
+            }
+        }
+    },
+
+    //添加子方块
+    addSubItem: function(){
+        //判断是否目标方块
+        if(this.getIfTarget()){
+            return;
+        }
+        var subItem = new SubItem();
+        subItem.addDirecteLine(this);
+        this.drawNode.addChild(subItem);
     },
 
     //缩放动作

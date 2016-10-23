@@ -10,9 +10,6 @@ var RelationItem = cc.Node.extend({
         //设置关联性
         this.setRelation();
 
-        ////展示路径
-        //this.showPathItems();
-
         return true;
     },
 
