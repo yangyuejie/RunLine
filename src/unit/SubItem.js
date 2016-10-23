@@ -1,5 +1,5 @@
 /**
- * Created by CF-BJ-032 on 2016/10/20.
+ * Created by 杨跃杰 on 2016/10/20.
  */
 var SubItem = cc.Node.extend({
 
@@ -52,7 +52,7 @@ var SubItem = cc.Node.extend({
         point[0] = cc.p(-10, 0);
         point[1] = cc.p(-1/2*10, -1.7320508075689/2*10);
         point[2] = cc.p(1/2*10, -1.7320508075689/2*10);
-        drawNode.drawCatmullRom(point, 30, 5, cc.color(255,255,255,255));
+        drawNode.drawCatmullRom(point, 30, 5, cc.color(255,255,255,80));
         this.addChild(drawNode);
         var rotate;
         switch (direction){
