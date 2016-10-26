@@ -1,20 +1,29 @@
 /**
- * Created by temp on 16/9/22.
+ * Created by CF-BJ-032 on 2016/10/26.
  */
-var DirHexagon = Hexagon.extend({
+var PropItem = Hexagon.extend({
 
-    //移动次数
-    stepNum: 0,
+    //延伸方块数组
+    extendArr:[],
 
     ctor:function () {
         this._super();
     },
 
+    //创建延伸方块
+    initPropData: function(itemKey){
+        var data = ItemInforList.shared().getObject(itemKey);
+        //初始化基础属性信息
+        this.initDataInfor(data);
 
-
-    //设置移动次数
-    setStepNum: function(stepNum){
-        this.stepNum = stepNum;
+        for(var i=0; i<this.getExtendStep(); i++){
+            var item = new Hexagon();
+            //设置单元格数据信息
+            var data = this.getExtendID();
+            item.initItemInfor(data);
+            item.drowPolygon();
+            this.extendArr.push(item);
+        }
     },
 
     //设置类型属性信息
@@ -124,61 +133,18 @@ var DirHexagon = Hexagon.extend({
 
     },
 
-    //设置第二方向
-    setSecondDir: function(){
-
-        var item = this.getParent();
-        item.setDirectId(lineID);
-        for(var i=0; i<this.stepNum; i++){
-
-            var dir = nonDir;
-            var target = null;
-
-            switch(this.itemType){
-                case leftType:
-                    target = item.left;
-                    dir = leftState;
-                    break;
-                case rightType:
-                    target = item.right;
-                    dir = rightState;
-                    break;
-                case lUpType:
-                    target = item.lUp;
-                    dir = lUpState;
-                    break;
-                case rUpType:
-                    target = item.rUp;
-                    dir = rUpState;
-                    break;
-                case lDownType:
-                    target = item.lDown;
-                    dir = lDownState;
-                    break;
-                case rDownType:
-                    target = item.rDown;
-                    dir = rDownState;
-                    break;
-            }
-
-            var lineDir = {
-                lineid: lineID,
-                direction: dir
-            };
-
-            if(target==null){
+    //设置延伸方块
+    setExtenItem: function(){
+        var parent = this.getParent();
+        var direction = this.getMoveDir();
+        for(var i=0; i<this.getExtendStep(); i++){
+            var item = parent.getDirItem(direction);
+            if(item==null){
                 return;
             }
-            target.addSecondDir(lineDir);
-            target.setDirectId(lineID);
-            target.drowPolygon();
-            item = target;
+            item.setRotation(-30);
+            item.setAttachItem(this.extendArr[i]);
         }
-
-        lineID++;
     }
 
 });
-
-//线路ID
-var lineID = 2;

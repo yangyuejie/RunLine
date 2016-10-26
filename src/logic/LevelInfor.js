@@ -6,6 +6,8 @@ var LevelInfor = cc.Node.extend({
 
     //关卡信息
     itemArray:[],
+    //道具数组
+    propArray:[],
 
     ctor:function () {
         this._super();
@@ -19,24 +21,31 @@ var LevelInfor = cc.Node.extend({
 
     //关卡数值信息
     setLevelData: function(){
-        this.setDataInfor();
-       // this.changeLayOut();
+
+        //获取关卡
+        var array = this.getLevelData();
+        //设置布局数据信息
+        this.setDataInfor(array);
         //添加按钮
         this.addStartButton();
-
-        this.addDirection();
+        //设置技能方块
+        this.addDirection(array);
     },
 
-    //读取关卡数据信息
-    setDataInfor: function(){
-
-        ItemInforList.shared().removeTarget();
-        //获取关卡
+    //获取关卡信息
+    getLevelData: function(){
         var level = cc.sys.localStorage.getItem("level");
         if(level==null){
             level = 0;
         }
         var array = ItemInforList.shared().getLevelData(level);
+        return array;
+    },
+
+    //读取关卡数据信息
+    setDataInfor: function(array){
+
+        ItemInforList.shared().removeTarget();
 
         for(var i=0; i<array.length; i++){
             if(i>=9){
@@ -82,16 +91,18 @@ var LevelInfor = cc.Node.extend({
     },
 
     //添加指示方向unit
-    addDirection: function(){
+    addDirection: function(array){
+
         var scene = cc.director.getRunningScene();
-        var unit = new DirHexagon();
-        unit.setStateInfor(lUpType);
-        unit.drowPolygon();
-        unit.setStepNum(4);
-        unit.setPosition(cc.p(100,100));
-        unit.setTypeInfor();
-        scene.addChild(unit,100);
-        unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
+        for(var i=0; i<4; i++){
+            var unit = new PropItem();
+            unit.initPropData(array[9][i]);
+            unit.drowPolygon();
+            unit.setPosition(cc.p(100*(i+1),100));
+            scene.addChild(unit,100);
+            unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
+            this.propArray.push(unit);
+        }
     },
 
     //监控位置
@@ -125,7 +136,7 @@ var LevelInfor = cc.Node.extend({
                     node.setPosition(cc.p(0, 0));
                     node.setRotation(node.getRotation()-30);
                     item.setAttachItem(node);
-                    node.setSecondDir();
+                    node.setExtenItem();
                     break;
                 }
             }

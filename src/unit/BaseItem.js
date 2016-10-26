@@ -9,6 +9,8 @@ var BaseItem = cc.Node.extend({
     route_id:"0",
     //移动方向
     move_dir:"null",
+    //延伸方块ID
+    extend_id:0,
     //延伸步数
     extend_step:0,
     //旋转方向
@@ -41,16 +43,17 @@ var BaseItem = cc.Node.extend({
         this.setItemID(data[0]);
         this.setRouteID(data[1]);
         this.setMoveDir(data[2]);
-        this.setExtendStep(data[3]);
-        this.setRotateDir(data[4]);
-        this.setMoveSpeed(data[5]);
-        this.setRelatePos(data[6]);
-        this.setIfBaseItem(data[7]);
-        this.setIfStop(data[7]);
-        this.setIfTarget(data[9]);
-        this.setIfChangeDir(data[10]);
-        this.setIfDisplay(data[11]);
-        this.setItemColor(data[12]);
+        this.setExtendID(data[3]);
+        this.setExtendStep(data[4]);
+        this.setRotateDir(data[5]);
+        this.setMoveSpeed(data[6]);
+        this.setRelatePos(data[7]);
+        this.setIfBaseItem(data[8]);
+        this.setIfStop(data[9]);
+        this.setIfTarget(data[10]);
+        this.setIfChangeDir(data[11]);
+        this.setIfDisplay(data[12]);
+        this.setItemColor(data[13]);
     },
 
     //item id
@@ -78,8 +81,17 @@ var BaseItem = cc.Node.extend({
         return this.move_dir;
     },
 
+    //
+    setExtendID: function(extend_id){
+        this.extend_id = extend_id;
+    },
+
+    getExtendID: function(){
+        return this.extend_id;
+    },
+
     setExtendStep: function(extend_step){
-        this.extend_step = extend_step;
+        this.extend_step = parseInt(extend_step);
     },
 
     getExtendStep: function(){

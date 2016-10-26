@@ -19,10 +19,6 @@ var GameLayer = cc.Layer.extend({
         var levelInfo = new LevelInfor();
         levelInfo.setParmArr(relation.getItemArr());
         levelInfo.setLevelData();
-        ////加载关卡数据信息
-        //Checkpoint.loadCardData(function(array){
-        //    levelInfo.setLevelData(array);
-        //});
 
         return true;
     }

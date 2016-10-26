@@ -96,11 +96,6 @@ var Hexagon = BaseItem.extend({
         this.addChild(dn);
     },
 
-    //设置状态信息
-    setStateInfor: function(state){
-        this.itemType = state;
-    },
-
     //设置附加unit
     setAttachItem: function(item){
         this.attachArr.push(item);
@@ -162,7 +157,15 @@ var Hexagon = BaseItem.extend({
         //获取移动方向
         this.judgeChangeDir(target);
         var dirction = target.getMoveDir();
+        var item = this.getDirItem(dirction);
+        if(item!=null&&item.judgeRouteId(target)){
+            return item;
+        }
+        return null;
+    },
 
+    //获取关联方向item
+    getDirItem: function(dirction){
         var item = null;
         switch (dirction){
             case "left":
@@ -184,11 +187,7 @@ var Hexagon = BaseItem.extend({
                 item = this.rDown;
                 break;
         }
-
-        if(item!=null&&item.judgeRouteId(target)){
-            return item;
-        }
-        return null;
+        return item;
     },
 
     //判定目标对象路径id
