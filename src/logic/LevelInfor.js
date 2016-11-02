@@ -115,7 +115,7 @@ var LevelInfor = cc.Node.extend({
             for(var j=0; j<array.length; j++){
                 var item = array[j];
                 var dis = cc.pDistance(item.getPosition(), position);
-                if(dis < 50){
+                if(dis < radius/2){
                     item.setScale(1.1);
                 }else{
                     item.setScale(1);
@@ -134,7 +134,7 @@ var LevelInfor = cc.Node.extend({
                 if(item.getScale()>1){
                     node.removeFromParent();
                     node.setPosition(cc.p(0, 0));
-                    node.setRotation(node.getRotation()-30);
+                    node.setRotation(node.getRotation()+30);
                     item.setAttachItem(node);
                     node.setExtenItem();
                     break;

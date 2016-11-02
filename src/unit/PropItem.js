@@ -142,7 +142,7 @@ var PropItem = Hexagon.extend({
             if(item==null){
                 return;
             }
-            item.setRotation(-30);
+            this.extendArr[i].setRotation(-60);
             item.setAttachItem(this.extendArr[i]);
         }
     }
