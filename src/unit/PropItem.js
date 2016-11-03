@@ -22,55 +22,10 @@ var PropItem = Hexagon.extend({
             var data = this.getExtendID();
             item.initItemInfor(data);
             item.drowPolygon();
+            item.setRouteID(this.getRouteID());
             this.extendArr.push(item);
         }
     },
-
-    //设置类型属性信息
-    setTypeInfor: function(){
-
-        var rotate = -1;
-        switch(this.itemType){
-            case normType:
-            case targetType:
-                break;
-            case leftType:
-                rotate = -180;
-                break;
-            case rightType:
-                rotate = 0;
-                break;
-            case lUpType:
-                rotate = -120;
-                break;
-            case rUpType:
-                rotate = -60;
-                break;
-            case lDownType:
-                rotate = 120;
-                break;
-            case rDownType:
-                rotate = 60;
-                break;
-        }
-
-        if(rotate!=-1){
-
-            //添加创建方向指示标示
-            this.addTipLine();
-            this.setRotation(30+rotate);
-
-            var label = new cc.LabelTTF();
-            label. enableShadow(cc.color(0, 0, 0),4,4);
-            label.setString("2");
-            label.setFontSize(60);
-            label.setColor(cc.color(173, 255, 47));
-            label.setRotation(-30-rotate);
-            label.setOpacity(80);
-            this.drawNode.addChild(label);
-        }
-    },
-
 
     //添加指示线
     addTipLine: function(){
@@ -91,7 +46,6 @@ var PropItem = Hexagon.extend({
         this.addChild(drawNode);
         drawNode.setRotation(-30);
         drawNode.setPosition(cc.p(20,11));
-
     },
 
     //注册触摸事件
@@ -137,13 +91,15 @@ var PropItem = Hexagon.extend({
     setExtenItem: function(){
         var parent = this.getParent();
         var direction = this.getMoveDir();
+        var item = parent.getDirItem(direction);
         for(var i=0; i<this.getExtendStep(); i++){
-            var item = parent.getDirItem(direction);
             if(item==null){
                 return;
             }
-            this.extendArr[i].setRotation(-60);
+            var rotate = this.extendArr[i].getRotation();
+            this.extendArr[i].setRotation(rotate-30);
             item.setAttachItem(this.extendArr[i]);
+            item = item.getDirItem(direction);
         }
     }
 

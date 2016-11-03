@@ -67,6 +67,20 @@ var LevelInfor = cc.Node.extend({
         var self = this;
         scene.schedule(function(dt){
             var array = ItemInforList.shared().getTargetArr();
+
+            //判断是否胜利
+            var ifWin = true;
+            var indexID = array[0].getParent().getIndexID();
+            for(var i=1; i<array.length; i++) {
+                if (array[i].getParent().getIndexID() != indexID) {
+                    ifWin = false;
+                    break;
+                }
+            }
+            if(ifWin){
+                //展示胜利页面
+                return;
+            }
             for(var i=0; i<array.length; i++){
                 array[i].moveToTarget();
             }
@@ -94,7 +108,7 @@ var LevelInfor = cc.Node.extend({
     addDirection: function(array){
 
         var scene = cc.director.getRunningScene();
-        for(var i=0; i<4; i++){
+        for(var i=0; i<1; i++){
             var unit = new PropItem();
             unit.initPropData(array[9][i]);
             unit.drowPolygon();

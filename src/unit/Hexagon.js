@@ -7,12 +7,6 @@ var Hexagon = BaseItem.extend({
     //附加unit
     attachArr:[],
 
-    //二次方向
-    branchDir:[],
-
-    //二次方向id
-    direId:0,
-
     drawNode: null,
 
     //关联指针
@@ -22,12 +16,6 @@ var Hexagon = BaseItem.extend({
     rUp:null,
     lDown:null,
     rDown:null,
-
-    //状态标志
-    itemType:normType,
-
-    //关联方向
-    direState:nonDir,
 
     ctor:function () {
 
@@ -82,10 +70,6 @@ var Hexagon = BaseItem.extend({
         var color = this.getItemColor();
         this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
         this.addChild( this.drawNode);
-
-        //var subItem = new SubItem();
-        //subItem.drowCircular();
-        //this.drawNode.addChild(subItem);
     },
 
     //添加球
@@ -109,32 +93,9 @@ var Hexagon = BaseItem.extend({
 
     //移除附加unit
     removeAttachItem: function(index){
-
         var target = this.attachArr[index];
         target.removeFromParent();
         this.attachArr.splice(index,1);
-    },
-
-    //设置二次方向信息
-    addSecondDir: function(dirction){
-        this.branchDir.push(dirction);
-    },
-
-    //获取二次方向数组信息
-    getSecondDir: function(direID){
-
-        for(var i=0; i<this.branchDir.length; i++){
-            var dirItem = this.branchDir[i];
-            if(dirItem.lineid==direID){
-                return dirItem.direction;
-            }
-        }
-        return nonDir;
-    },
-
-    //设置二次方向ID
-    setDirectId : function(id){
-        this.direId = id;
     },
 
     //方块移动动作
@@ -214,12 +175,19 @@ var Hexagon = BaseItem.extend({
 
     //判断是否更改方向
     judgeChangeDir: function(target){
+        var cube = null;
         var array = this.getAttachItem();
         for(var i=0; i<array.length; i++){
             if(array[i].getIfChangeDir()){
-                target.setMoveDir(array[i].getMoveDir());
+                cube = array[i];
+                //移除标记方块
+                this.removeTarget(target);
                 break;
             }
+        }
+        if(cube){
+            target.setMoveDir(cube.getMoveDir());
+            target.setRouteID(cube.getRouteID());
         }
     },
 

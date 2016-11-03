@@ -16,6 +16,7 @@ var RelationItem = cc.Node.extend({
     //布局固定数量的单元格
     layOutItems: function(){
 
+        var indexID = 0;
         var size = cc.winSize;
         var halfNum = (lineNum-1)/2;
         var indexX  = halfNum/2;
@@ -48,8 +49,10 @@ var RelationItem = cc.Node.extend({
 
                 }
                 hexagon.setPosition(cc.p(size.width/2-addX-radius*i,size.height/2+highNum*radius*1.7320508075689/2));
+                hexagon.setIndexID(indexID);
                 this.addChild(hexagon);
                 array.push(hexagon);
+                indexID++;
             }
             this.itemArray.push(array.reverse());
             if(j>halfNum){

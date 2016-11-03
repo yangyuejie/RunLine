@@ -3,6 +3,9 @@
  */
 var BaseItem = cc.Node.extend({
 
+    //唯一标示符
+    indexID:0,
+
     //item id
     item_id:"100",
     //路径id
@@ -189,6 +192,16 @@ var BaseItem = cc.Node.extend({
 
     getItemColor: function(){
         return this.itemColor;
+    },
+
+    //设置唯一标示符
+    setIndexID: function(indexID){
+        this.indexID = indexID;
+    },
+
+    //获取唯一标示符
+    getIndexID: function(){
+        return this.indexID;
     }
 
 });
