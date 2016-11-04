@@ -20,10 +20,10 @@ var LevelInfor = cc.Node.extend({
     },
 
     //关卡数值信息
-    setLevelData: function(){
+    setLevelData: function(level){
 
         //获取关卡
-        var array = this.getLevelData();
+        var array = this.getLevelData(level);
         //设置布局数据信息
         this.setDataInfor(array);
         //添加按钮
@@ -33,11 +33,11 @@ var LevelInfor = cc.Node.extend({
     },
 
     //获取关卡信息
-    getLevelData: function(){
-        var level = cc.sys.localStorage.getItem("level");
-        if(level==null){
-            level = 0;
-        }
+    getLevelData: function(level){
+        //var level = cc.sys.localStorage.getItem("level");
+        //if(level==null){
+        //    level = 0;
+        //}
         var array = ItemInforList.shared().getLevelData(level);
         return array;
     },
@@ -79,6 +79,9 @@ var LevelInfor = cc.Node.extend({
             }
             if(ifWin){
                 //展示胜利页面
+                scene.unschedule();
+                //重新布局
+                self.disLayoutNew();
                 return;
             }
             for(var i=0; i<array.length; i++){
@@ -156,6 +159,25 @@ var LevelInfor = cc.Node.extend({
                 }
             }
         }
+    },
+
+    //重新布局页面信息
+    disLayoutNew: function(){
+        //var level = cc.sys.localStorage.getItem("level");
+        //cc.sys.localStorage.setItem("level",level+1);
+
+        for(var i=0; i<lineNum; i++){
+            var array = this.itemArray[i];
+            for(var j=0; j<array.length; j++){
+                var item = array[j];
+                var attachArr = item.getAttachItem();
+                for(var m=0; m<attachArr.length; m++){
+                    item.removeAttachItem(m);
+                    m--;
+                }
+            }
+        }
+        this.setLevelData(1);
     }
 
 });

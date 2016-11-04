@@ -18,7 +18,7 @@ var GameLayer = cc.Layer.extend({
 
         var levelInfo = new LevelInfor();
         levelInfo.setParmArr(relation.getItemArr());
-        levelInfo.setLevelData();
+        levelInfo.setLevelData(0);
 
         return true;
     }
