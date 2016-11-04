@@ -112,6 +112,7 @@ var LevelInfor = cc.Node.extend({
             var unit = new PropItem();
             unit.initPropData(array[9][i]);
             unit.drowPolygon();
+            unit.addSubItem();
             unit.setPosition(cc.p(100*(i+1),100));
             scene.addChild(unit,100);
             unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
@@ -148,7 +149,7 @@ var LevelInfor = cc.Node.extend({
                 if(item.getScale()>1){
                     node.removeFromParent();
                     node.setPosition(cc.p(0, 0));
-                    node.setRotation(node.getRotation()+30);
+                    node.setRotation(node.getRotation()-30);
                     item.setAttachItem(node);
                     node.setExtenItem();
                     break;

@@ -15,7 +15,6 @@ var PropItem = Hexagon.extend({
         var data = ItemInforList.shared().getObject(itemKey);
         //初始化基础属性信息
         this.initDataInfor(data);
-
         for(var i=0; i<this.getExtendStep(); i++){
             var item = new Hexagon();
             //设置单元格数据信息
@@ -25,6 +24,7 @@ var PropItem = Hexagon.extend({
             item.setRouteID(this.getRouteID());
             this.extendArr.push(item);
         }
+        this.addStepTips();
     },
 
     //添加指示线
@@ -46,6 +46,17 @@ var PropItem = Hexagon.extend({
         this.addChild(drawNode);
         drawNode.setRotation(-30);
         drawNode.setPosition(cc.p(20,11));
+    },
+
+    //添加数量标记
+    addStepTips: function(){
+        var step = this.getExtendStep();
+        var label = new cc.LabelTTF();
+        label.setString(step+"");
+        label.setFontSize(15);
+        label.setColor(cc.color(255,0,0));
+        label.setRotation(-30);
+        this.addChild(label);
     },
 
     //注册触摸事件
