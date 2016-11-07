@@ -116,7 +116,7 @@ var LevelInfor = cc.Node.extend({
             unit.initPropData(array[9][i]);
             unit.drowPolygon();
             unit.addSubItem();
-            unit.setPosition(cc.p(100*(i+1),100));
+            unit.storeInitialPos(cc.p(100*(i+1),100));
             scene.addChild(unit,100);
             unit.addTouchEvent(LevelInfor.prototype.touchMoveBack.bind(this), LevelInfor.prototype.touchEndBack.bind(this));
             this.propArray.push(unit);
@@ -132,11 +132,12 @@ var LevelInfor = cc.Node.extend({
             var array = this.itemArray[i];
             for(var j=0; j<array.length; j++){
                 var item = array[j];
-                if(!this.judgeEffectPos(item)){
-                    //该位置为无效位置。。。
-                }
                 var dis = cc.pDistance(item.getPosition(), position);
                 if(dis < radius/2){
+                    if(!this.judgeEffectPos(item)){
+                        //无效位置
+                        continue;
+                    }
                     item.setScale(1.1);
                 }else{
                     item.setScale(1);
@@ -151,14 +152,19 @@ var LevelInfor = cc.Node.extend({
         for(var i=0; i<lineNum; i++){
             var array = this.itemArray[i];
             for(var j=0; j<array.length; j++){
-                var item = array[j];
-                if(item.getScale()>1){
-                    node.removeFromParent();
-                    node.setPosition(cc.p(0, 0));
-                    node.setRotation(node.getRotation()-30);
-                    item.setAttachItem(node);
-                    node.setExtenItem();
-                    break;
+                for(var j=0; j<array.length; j++) {
+                    var item = array[j];
+                    if (item.getScale() > 1) {
+                        node.removeFromParent();
+                        node.setPosition(cc.p(0, 0));
+                        node.setRotation(node.getRotation() - 30);
+                        item.setAttachItem(node);
+                        node.setExtenItem();
+                        break;
+                    } else {
+                        //还原位置。。。
+                        node.recoverPos();
+                    }
                 }
             }
         }
