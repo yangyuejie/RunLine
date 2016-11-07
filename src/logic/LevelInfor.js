@@ -137,7 +137,7 @@ var LevelInfor = cc.Node.extend({
     addDirection: function(array){
 
         var scene = cc.director.getRunningScene();
-        for(var i=0; i<1; i++){
+        for(var i=0; i<4; i++){
             var unit = new PropItem();
             unit.initPropData(array[9][i]);
             unit.drowPolygon();
@@ -175,6 +175,7 @@ var LevelInfor = cc.Node.extend({
     //点击结束回调
     touchEndBack: function(node){
 
+        var ifEct = false;
         for(var i=0; i<lineNum; i++){
             var array = this.itemArray[i];
             for(var j=0; j<array.length; j++) {
@@ -185,12 +186,17 @@ var LevelInfor = cc.Node.extend({
                     node.setRotation(node.getRotation() - 30);
                     item.setAttachItem(node);
                     node.setExtenItem();
+                    ifEct = true;
                     break;
-                } else {
-                    //还原位置。。。
-                    node.recoverPos();
                 }
             }
+            if(ifEct){
+                break;
+            }
+        }
+        if(!ifEct){
+            //还原位置。。。
+            node.recoverPos();
         }
     },
 

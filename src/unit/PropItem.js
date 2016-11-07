@@ -10,6 +10,7 @@ var PropItem = Hexagon.extend({
 
     ctor:function () {
         this._super();
+        this.extendArr = [];
     },
 
     //创建延伸方块
