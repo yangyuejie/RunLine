@@ -13,19 +13,26 @@ sa.LoadScene = cc.Node.extend({
 sa.LoadScene.preload = function(backFun){
 
     var res = [];
-    for(var i=1; i<cardNum+1; i++){
+    for(var i=1; i<=cardNum; i++){
         res.push("res/data/level_"+i+".txt");
     }
     var self = this;
     cc.loader.load(res, function(err,array) {
         var inforArr = [];
-        array = array[0].split("\n");
-        for (var i = 0; i < array.length; i++) {
-           // var itemArr = array[i].split(",");
-            var itemArr = self.dealArray(array[i]);
-            inforArr.push(itemArr);
+        for(var j=0; j<array.length; j++){
+            var subArr = array[j].split("\n");
+            for (var i = 0; i < subArr.length; i++) {
+                var itemArr = self.dealArray(subArr[i]);
+                inforArr.push(itemArr);
+            }
+            ItemInforList.shared().setLevelData(inforArr);
         }
-        ItemInforList.shared().setLevelData(inforArr);
+        //array = array[0].split("\n");
+        //for (var i = 0; i < array.length; i++) {
+        //    var itemArr = self.dealArray(array[i]);
+        //    inforArr.push(itemArr);
+        //}
+        //ItemInforList.shared().setLevelData(inforArr);
         //加载item数据信息
 
         cc.loader.load("res/data/unitInfor.txt", function (err, array) {

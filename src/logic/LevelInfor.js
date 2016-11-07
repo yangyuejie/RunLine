@@ -63,31 +63,57 @@ var LevelInfor = cc.Node.extend({
 
     //更改布局页面信息
     changeLayOut: function(){
-        var scene = cc.director.getRunningScene();
-        var self = this;
-        scene.schedule(function(dt){
-            var array = ItemInforList.shared().getTargetArr();
+        //var scene = cc.director.getRunningScene();
+        //var self = this;
+        this.schedule(this.monitorAction,1);
+        //this.schedule(function(dt){
+        //    var array = ItemInforList.shared().getTargetArr();
+        //
+        //    //判断是否胜利
+        //    var ifWin = true;
+        //    var indexID = array[0].getParent().getIndexID();
+        //    for(var i=1; i<array.length; i++) {
+        //        if (array[i].getParent().getIndexID() != indexID) {
+        //            ifWin = false;
+        //            break;
+        //        }
+        //    }
+        //    if(ifWin){
+        //        //展示胜利页面
+        //        scene.unschedule(scene.schedule);
+        //        //重新布局
+        //        self.disLayoutNew();
+        //        return;
+        //    }
+        //    for(var i=0; i<array.length; i++){
+        //        array[i].moveToTarget();
+        //    }
+        //},1);
+    },
 
-            //判断是否胜利
-            var ifWin = true;
-            var indexID = array[0].getParent().getIndexID();
-            for(var i=1; i<array.length; i++) {
-                if (array[i].getParent().getIndexID() != indexID) {
-                    ifWin = false;
-                    break;
-                }
+    //监控动作状态
+    monitorAction: function(){
+        var array = ItemInforList.shared().getTargetArr();
+
+        //判断是否胜利
+        var ifWin = true;
+        var indexID = array[0].getParent().getIndexID();
+        for(var i=1; i<array.length; i++) {
+            if (array[i].getParent().getIndexID() != indexID) {
+                ifWin = false;
+                break;
             }
-            if(ifWin){
-                //展示胜利页面
-                scene.unschedule();
-                //重新布局
-                self.disLayoutNew();
-                return;
-            }
-            for(var i=0; i<array.length; i++){
-                array[i].moveToTarget();
-            }
-        },1);
+        }
+        if(ifWin){
+            //展示胜利页面
+            this.unschedule(this.monitorAction);
+            //重新布局
+            this.disLayoutNew();
+            return;
+        }
+        for(var i=0; i<array.length; i++){
+            array[i].moveToTarget();
+        }
     },
 
     addStartButton: function(){
@@ -151,20 +177,18 @@ var LevelInfor = cc.Node.extend({
 
         for(var i=0; i<lineNum; i++){
             var array = this.itemArray[i];
-            for(var j=0; j<array.length; j++){
-                for(var j=0; j<array.length; j++) {
-                    var item = array[j];
-                    if (item.getScale() > 1) {
-                        node.removeFromParent();
-                        node.setPosition(cc.p(0, 0));
-                        node.setRotation(node.getRotation() - 30);
-                        item.setAttachItem(node);
-                        node.setExtenItem();
-                        break;
-                    } else {
-                        //还原位置。。。
-                        node.recoverPos();
-                    }
+            for(var j=0; j<array.length; j++) {
+                var item = array[j];
+                if (item.getScale() > 1) {
+                    node.removeFromParent();
+                    node.setPosition(cc.p(0, 0));
+                    node.setRotation(node.getRotation() - 30);
+                    item.setAttachItem(node);
+                    node.setExtenItem();
+                    break;
+                } else {
+                    //还原位置。。。
+                    node.recoverPos();
                 }
             }
         }

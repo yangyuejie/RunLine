@@ -33,4 +33,4 @@ var rDownState = 6;
 //关卡数量
 var radius = 75;
 
-var cardNum = 1;
+var cardNum = 2;
