@@ -5,6 +5,8 @@ var PropItem = Hexagon.extend({
 
     //延伸方块数组
     extendArr:[],
+    //初始位置
+    prePos:cc.p(0,0),
 
     ctor:function () {
         this._super();
@@ -25,6 +27,17 @@ var PropItem = Hexagon.extend({
             this.extendArr.push(item);
         }
         this.addStepTips();
+    },
+
+    //存储初始位置
+    storeInitialPos: function(position){
+        this.prePos = position;
+        this.setPosition(position);
+    },
+
+    //还原位置
+    recoverPos: function(){
+        this.setPosition(this.prePos);
     },
 
     //添加指示线
