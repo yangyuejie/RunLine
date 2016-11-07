@@ -132,6 +132,9 @@ var LevelInfor = cc.Node.extend({
             var array = this.itemArray[i];
             for(var j=0; j<array.length; j++){
                 var item = array[j];
+                if(!this.judgeEffectPos(item)){
+                    //该位置为无效位置。。。
+                }
                 var dis = cc.pDistance(item.getPosition(), position);
                 if(dis < radius/2){
                     item.setScale(1.1);
@@ -159,6 +162,17 @@ var LevelInfor = cc.Node.extend({
                 }
             }
         }
+    },
+
+    //判断是否放到了有效位置
+    judgeEffectPos: function(item){
+        var array = item.getAttachItem();
+        for(var i=0; i<array.length; i++){
+            if(array[i].getIfTarget()||array[i].getExtendStep()!=0){//目标方块、技能方块无效
+                return false;
+            }
+        }
+        return true;
     },
 
     //重新布局页面信息
