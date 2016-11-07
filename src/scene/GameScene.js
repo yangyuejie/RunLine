@@ -12,14 +12,19 @@ var GameLayer = cc.Layer.extend({
         var colorLayer = new cc.LayerColor(cc.color(255,255,255,155),winSize.width,winSize.height);
         this.addChild(colorLayer);
 
-        //布局页面信息
-        var relation = new RelationItem();
-        this.addChild(relation);
+        ////布局页面信息
+        //var relation = new RelationItem();
+        //this.addChild(relation);
+        //
+        //var levelInfo = new LevelInfor();
+        //levelInfo.setParmArr(relation.getItemArr());
+        //levelInfo.setLevelData(0);
+        //this.addChild(levelInfo);
 
-        var levelInfo = new LevelInfor();
-        levelInfo.setParmArr(relation.getItemArr());
-        levelInfo.setLevelData(0);
-        this.addChild(levelInfo);
+        //主页面菜单
+        var mainMenu = new MainMenu();
+        this.addChild(mainMenu);
+
         return true;
     }
 });

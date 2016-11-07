@@ -10,6 +10,7 @@ var PropItem = Hexagon.extend({
 
     ctor:function () {
         this._super();
+        this.extendArr = [];
     },
 
     //创建延伸方块
@@ -82,7 +83,7 @@ var PropItem = Hexagon.extend({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function(touch, event){
                 var point = touch.getLocation();
-                var converP = self.drawNode.convertToNodeSpace(point);
+                var converP = self.convertToNodeSpace(point);
                 //判断是否在点击范围之内
                 var rect = cc.rect(-1.7320508075689*50/2,-40,1.7320508075689*50,80);
                 if(cc.rectContainsPoint(rect,converP)){
@@ -107,7 +108,7 @@ var PropItem = Hexagon.extend({
                 self.setScale(1);
             },
             swallowTouches: false
-        }, this.drawNode);
+        }, this);
 
     },
 
