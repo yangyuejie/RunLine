@@ -5,20 +5,28 @@ var SelectScene = cc.Scene.extend({
 
     ctor:function () {
         this._super();
+
+        var winSize = cc.winSize;
+        //背景
+        var colorLayer = new cc.LayerColor(cc.color(25,52,55,155),winSize.width,winSize.height);
+        this.addChild(colorLayer);
+
         //添加pageView
-        this.addPageView();
+        for(var i=0; i<2; i++){
+            this.addPageView(i);
+        }
 
         return true;
     },
 
     //添加pageView
-    addPageView: function(){
+    addPageView: function(index){
 
         var winSize = cc.director.getWinSize();
         var pageView = new ccui.PageView();
         pageView.setTouchEnabled(true);
-        pageView.setContentSize(cc.size(winSize.width/2, winSize.height/2));
-        pageView.setPosition(cc.p(100,100));
+        pageView.setContentSize(cc.size(winSize.width*2/3, winSize.height/3));
+        pageView.setPosition(cc.p(winSize.width/6,winSize.height/2+(index-1)*winSize.height/3));
 
         for (var i = 0; i < 3; ++i) {
             var layout = new ccui.Layout();
@@ -32,11 +40,11 @@ var SelectScene = cc.Scene.extend({
 
     //布局关卡按钮
     addCardBnt: function(layout,index){
-        for(var i=0; i<3; i++){
+        for(var i=0; i<5; i++){
             for(var j=0; j<5; j++){
                 var subItem = new SubItem();
                 subItem.drowSixEdge(cc.color(200,200,200,200));
-                subItem.setPosition(50+radius*j,50+radius*i);
+                subItem.setPosition(50+(radius+10)*j,50+radius*i);
                 layout.addChild(subItem);
             }
         }

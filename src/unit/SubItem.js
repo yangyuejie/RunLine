@@ -62,13 +62,7 @@ var SubItem = cc.Node.extend({
         if(direction=="null"){
             return;
         }
-        var drawNode = new cc.DrawNode();
-        var point = [];
-        point[0] = cc.p(-10, 0);
-        point[1] = cc.p(-1/2*10, -1.7320508075689/2*10);
-        point[2] = cc.p(1/2*10, -1.7320508075689/2*10);
-        drawNode.drawCatmullRom(point, 30, 5, cc.color(255,255,255,80));
-        this.addChild(drawNode);
+        var drawNode = this.drowRoadTip();
         var rotate;
         switch (direction){
             case "left":
@@ -91,6 +85,18 @@ var SubItem = cc.Node.extend({
                 break;
         }
         drawNode.setRotation(rotate);
+    },
+
+    //绘制小路标记
+    drowRoadTip: function(){
+        var drawNode = new cc.DrawNode();
+        var point = [];
+        point[0] = cc.p(-10, 0);
+        point[1] = cc.p(-1/2*10, -1.7320508075689/2*10);
+        point[2] = cc.p(1/2*10, -1.7320508075689/2*10);
+        drawNode.drawCatmullRom(point, 30, 5, cc.color(255,255,255,80));
+        this.addChild(drawNode);
+        return drawNode;
     }
 
 });

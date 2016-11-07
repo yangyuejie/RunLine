@@ -5,18 +5,39 @@ var MainMenu = cc.Node.extend({
 
     ctor:function () {
         this._super();
-
+        //布局背景信息
+        this.addGroundInf();
         //布局按钮信息
         this.layoutButton();
+    },
+
+    //布局背景信息
+    addGroundInf: function(){
+
+        //添加方向小标记
+        for(var i=0; i<7; i++){
+            var item = new SubItem();
+            item.drowRoadTip();
+            item.setPosition(cc.p(radius*(i+1),radius*(i+1)));
+            this.addChild(item);
+        }
     },
 
     //布局按钮信息
     layoutButton: function(){
 
+        var size = cc.winSize;
         for(var i=0; i<5; i++){
             var subItem = new SubItem();
             subItem.drowSixEdge(cc.color(100,100,100,100));
-            subItem.setPosition(cc.p(100,100*i));
+            if(i<2){
+                subItem.setPosition(cc.p(size.width/4+i*size.width/2,size.height/4));
+            }else if(i>2){
+                subItem.setPosition(cc.p(size.width/4+(i-3)*size.width/2,size.height/4+size.height/2));
+            }else{
+                subItem.setPosition(cc.p(size.width/2,size.height/2));
+            }
+
             subItem.setTag(i);
             this.addBntLabel(subItem);
             this.addChild(subItem);
