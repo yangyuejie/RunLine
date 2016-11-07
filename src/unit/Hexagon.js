@@ -7,8 +7,6 @@ var Hexagon = BaseItem.extend({
     //附加unit
     attachArr:[],
 
-    drawNode: null,
-
     //关联指针
     left:null,
     right:null,
@@ -55,29 +53,10 @@ var Hexagon = BaseItem.extend({
 
     //绘制多边形
     drowPolygon: function(){
-        //创建DrawNode
-        this.drawNode = cc.DrawNode.create();
-
-        var point1 = [];
-        point1[0] = cc.p(-radius/2, 0);
-        point1[1] = cc.p(-1/2*radius/2, -1.7320508075689/2*radius/2);
-        point1[2] = cc.p(1/2*radius/2, -1.7320508075689/2*radius/2);
-        point1[3] = cc.p(radius/2, 0);
-        point1[4] = cc.p(1/2*radius/2, 1.7320508075689/2*radius/2);
-        point1[5] = cc.p(-1/2*radius/2, 1.7320508075689/2*radius/2);
-
-        //基础信息
         var color = this.getItemColor();
-        this.drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
-        this.addChild( this.drawNode);
-    },
-
-    //添加球
-    addCircle: function(){
-
-        var dn = new cc.DrawNode();
-        dn.drawCircle(cc.p(0,0), 30, 360, 100, false, cc.color(255, 0, 0));
-        this.addChild(dn);
+        var subItem = new SubItem();
+        subItem.drowSixEdge(color);
+        this.addChild(subItem);
     },
 
     //设置附加unit
@@ -199,7 +178,7 @@ var Hexagon = BaseItem.extend({
         }
         var subItem = new SubItem();
         subItem.addDirecteLine(this);
-        this.drawNode.addChild(subItem);
+        this.addChild(subItem);
     },
 
     //缩放动作

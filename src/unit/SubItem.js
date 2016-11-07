@@ -2,8 +2,6 @@
  * Created by 杨跃杰 on 2016/10/20.
  */
 var SubItem = cc.Node.extend({
-
-    drawNode:null,
     ctor:function () {
         this._super();
     },
@@ -12,6 +10,23 @@ var SubItem = cc.Node.extend({
     addSubType: function(item){
         //添加指示线
         this.addDirecteLine(item);
+    },
+
+    //绘制六边形
+    drowSixEdge:function(color){
+        //创建DrawNode
+        var drawNode = cc.DrawNode.create();
+
+        var point1 = [];
+        point1[0] = cc.p(-radius/2, 0);
+        point1[1] = cc.p(-1/2*radius/2, -1.7320508075689/2*radius/2);
+        point1[2] = cc.p(1/2*radius/2, -1.7320508075689/2*radius/2);
+        point1[3] = cc.p(radius/2, 0);
+        point1[4] = cc.p(1/2*radius/2, 1.7320508075689/2*radius/2);
+        point1[5] = cc.p(-1/2*radius/2, 1.7320508075689/2*radius/2);
+
+        drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
+        this.addChild(drawNode);
     },
 
     //绘制圆形

@@ -20,6 +20,11 @@ var GameLayer = cc.Layer.extend({
         levelInfo.setParmArr(relation.getItemArr());
         levelInfo.setLevelData(0);
         this.addChild(levelInfo);
+
+        //主页面菜单
+        var mainMenu = new MainMenu();
+        this.addChild(mainMenu);
+
         return true;
     }
 });
