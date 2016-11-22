@@ -20,7 +20,7 @@
         "src/ext/CCMutableDictionary.js",
 
         "src/scene/GameScene.js",
-        "src/scene/MainMenu.js",
+        "src/scene/MenuScene.js",
         "src/scene/SelectScene.js",
 
         "src/const/const.js",

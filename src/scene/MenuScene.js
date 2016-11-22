@@ -1,10 +1,24 @@
 /**
  * Created by CF-BJ-032 on 2016/11/7.
  */
-var MainMenu = cc.Node.extend({
+var MenuScene = cc.Scene.extend({
+    onEnter:function () {
+        this._super();
+        var layer = new MainMenu();
+        this.addChild(layer);
+    }
+});
+
+var MainMenu = cc.Scene.extend({
 
     ctor:function () {
         this._super();
+        //尺寸
+        var winSize = cc.winSize;
+        //背景
+        var colorLayer = new cc.LayerColor(cc.color(255,255,255,155),winSize.width,winSize.height);
+        this.addChild(colorLayer);
+
         //布局背景信息
         this.addGroundInf();
         //布局按钮信息

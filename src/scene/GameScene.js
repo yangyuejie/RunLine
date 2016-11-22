@@ -10,20 +10,16 @@ var GameLayer = cc.Layer.extend({
 
         //背景
         var colorLayer = new cc.LayerColor(cc.color(255,255,255,155),winSize.width,winSize.height);
-        this.addChild(colorLayer);
+        this.addChild(colorLayer,-1);
 
-        ////布局页面信息
-        //var relation = new RelationItem();
-        //this.addChild(relation);
-        //
-        //var levelInfo = new LevelInfor();
-        //levelInfo.setParmArr(relation.getItemArr());
-        //levelInfo.setLevelData(0);
-        //this.addChild(levelInfo);
+        //布局页面信息
+        var relation = new RelationItem();
+        this.addChild(relation);
 
-        //主页面菜单
-        var mainMenu = new MainMenu();
-        this.addChild(mainMenu);
+        var levelInfo = new LevelInfor();
+        levelInfo.setParmArr(relation.getItemArr());
+        levelInfo.setLevelData(0);
+        this.addChild(levelInfo);
 
         return true;
     }
