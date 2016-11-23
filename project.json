@@ -2,13 +2,14 @@
     "project_type": "javascript",
 
     "debugMode" : 1,
-    "showFPS" : false,
+    "showFPS" : true,
     "frameRate" : 60,
+    "noCache" : false,
     "id" : "gameCanvas",
     "renderMode" : 0,
     "engineDir":"frameworks/cocos2d-html5",
 
-    "modules" : ["cocos2d","extensions"],
+    "modules" : ["cocos2d", "cocostudio"],
 
     "jsList" : [
         "src/resource.js",
@@ -24,12 +25,15 @@
         "src/scene/SelectScene.js",
 
         "src/const/const.js",
+
         "src/unit/SubItem.js",
         "src/unit/BaseItem.js",
         "src/unit/Hexagon.js",
         "src/unit/PropItem.js",
+
         "src/logic/RelationItem.js",
         "src/logic/LevelInfor.js",
+
         "src/data/ItemInforList.js"
     ]
 }
