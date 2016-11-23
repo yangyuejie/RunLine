@@ -61,13 +61,19 @@ cc.game.onStart = function(){
     // Adjust viewport meta
     cc.view.adjustViewPort(true);
     // Setup the resolution policy and design resolution size
-    cc.view.setDesignResolutionSize(960, 1130, cc.ResolutionPolicy.SHOW_ALL);
+    cc.view.setDesignResolutionSize(960, 1136, cc.ResolutionPolicy.SHOW_ALL);
     // Instead of set design resolution, you can also set the real pixel resolution size
     // Uncomment the following line and delete the previous line.
     // cc.view.setRealPixelResolution(960, 640, cc.ResolutionPolicy.SHOW_ALL);
     // The game will be resized when browser size change
     cc.view.resizeWithBrowserSize(true);
-    //load resources
+
+    var designSize = cc.size(640,1136);
+    var screenSize = cc.winSize;
+    var scaleW = screenSize.width/designSize.width;
+    radius*=scaleW;
+
+        //load resources
     cc.LoaderScene.preload(g_resources, function () {
         sa.LoadScene.preload(function(){
             cc.director.runScene(new MenuScene());

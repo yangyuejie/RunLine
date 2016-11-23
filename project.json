@@ -20,9 +20,17 @@
         "src/ext/js.map.js",
         "src/ext/CCMutableDictionary.js",
 
-        "src/scene/GameScene.js",
+        "src/util/GameUtils.js",
+        "src/util/AdapterScene.js",
+
+        "src/scene/gameScene/GameScene.js",
+        "src/scene/gameScene/RelationItem.js",
+        "src/scene/gameScene/LevelInfor.js",
+        "src/scene/gameScene/GameMenu.js",
+
         "src/scene/MenuScene.js",
-        "src/scene/SelectScene.js",
+
+        "src/scene/selectScene/SelectScene.js",
 
         "src/const/const.js",
 
@@ -30,9 +38,6 @@
         "src/unit/BaseItem.js",
         "src/unit/Hexagon.js",
         "src/unit/PropItem.js",
-
-        "src/logic/RelationItem.js",
-        "src/logic/LevelInfor.js",
 
         "src/data/ItemInforList.js"
     ]

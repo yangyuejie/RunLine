@@ -73,45 +73,6 @@ var PropItem = Hexagon.extend({
         this.addChild(label);
     },
 
-    //注册触摸事件
-    addTouchEvent: function(moveBack, endBack){
-
-        var tmpPoint;
-        var self = this;
-        // 屏蔽下层事件
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event){
-                var point = touch.getLocation();
-                var converP = self.convertToNodeSpace(point);
-                //判断是否在点击范围之内
-                var rect = cc.rect(-1.7320508075689*50/2,-40,1.7320508075689*50,80);
-                if(cc.rectContainsPoint(rect,converP)){
-                    cc.log("touchBegan.......");
-                    tmpPoint = point;
-                    self.setScale(1.1);
-                    return true;
-                }
-                return false;
-            },
-            onTouchMoved: function(touch, event){
-                var point = touch.getLocation();
-                var x = self.getPositionX()+point.x-tmpPoint.x;
-                var y = self.getPositionY()+point.y-tmpPoint.y;
-                self.setPosition(cc.p(x,y));
-                tmpPoint = point;
-
-                moveBack(self);
-            },
-            onTouchEnded: function(touch, event){
-                endBack(self);
-                self.setScale(1);
-            },
-            swallowTouches: false
-        }, this);
-
-    },
-
     //设置延伸方块
     setExtenItem: function(){
         var parent = this.getParent();

@@ -1,7 +1,7 @@
 /**
  * Created by CF-BJ-032 on 2016/11/7.
  */
-var MenuScene = cc.Scene.extend({
+var MenuScene = AdapterScene.extend({
     onEnter:function () {
         this._super();
         var layer = new MainMenu();
