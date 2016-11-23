@@ -25,13 +25,15 @@ var SelectScene = AdapterScene.extend({
         var winSize = cc.director.getWinSize();
         var pageView = new ccui.PageView();
         pageView.setTouchEnabled(true);
-        pageView.setContentSize(cc.size(radius*9, radius*5));
-        pageView.setPosition(cc.p(radius,winSize.height/2+(index-1)*winSize.height/3));
+        pageView.setContentSize(cc.size(radius*7, radius*6));
+        pageView.setPosition(cc.p(radius,winSize.height/2+(index-1)*radius*5));
+        //设置触发滚动距离
+        pageView.setCustomScrollThreshold(30);
 
         for (var i = 0; i < 3; ++i) {
             var layout = new ccui.Layout();
             layout.setContentSize(radius*6,radius*5);
-            this.addCardBnt(layout,i);
+            this.addCardBnt(layout,i,index);
             pageView.addPage(layout);
         }
        // pageView.addEventListener(this.pageViewEvent, this);
@@ -39,13 +41,18 @@ var SelectScene = AdapterScene.extend({
     },
 
     //布局关卡按钮
-    addCardBnt: function(layout,index){
+    addCardBnt: function(layout,index,num){
         for(var i=0; i<4; i++){
             for(var j=0; j<5; j++){
+                var level = 60*num+index*20+i*5+j;
                 var subItem = new SubItem();
-                subItem.drowSixEdge(cc.color(200,200,200,200));
+                //subItem.drowSixEdge(cc.color(200,200,200,200));
+                var color = cc.color(level*2, 255-level*2, 255-level, 255);
+                subItem.drowCircular(20,color);
                 subItem.setPosition(radius+(radius+20)*j,radius+radius*i);
-                subItem.setName("scrollItem_"+25*index+i*5+j);
+                subItem.setName("scrollItem_"+level);
+                var colorLabel = cc.color(255*(1-num),255*num,0);
+                subItem.addLabel(colorLabel,""+level);
                 //注册触摸
                 var touchMove = SelectScene.prototype.touchMoveBack.bind(this);
                 var touchEnd = SelectScene.prototype.touchEndBack.bind(this);

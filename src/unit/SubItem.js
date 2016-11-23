@@ -30,9 +30,9 @@ var SubItem = cc.Node.extend({
     },
 
     //绘制圆形
-    drowCircular: function(){
+    drowCircular: function(radius,color){
         var drawNode = new cc.DrawNode();
-        drawNode.drawCircle(cc.p(0,0), 20, 0, 150, false, 1, cc.color(0, 255, 255, 255));
+        drawNode.drawCircle(cc.p(0,0), radius, 0, 150, false, 40, color);
         this.addChild(drawNode);
     },
 
@@ -97,6 +97,17 @@ var SubItem = cc.Node.extend({
         drawNode.drawCatmullRom(point, 30, 5, cc.color(255,255,255,80));
         this.addChild(drawNode);
         return drawNode;
+    },
+
+    //添加label
+    addLabel: function(color,str){
+        var size = this.getContentSize();
+        var label = new cc.LabelTTF();
+        label.setFontSize(30);
+        label.setPosition(cc.p(size.width/2,size.height/2));
+        label.setColor(color);
+        label.setString(str);
+        this.addChild(label);
     }
 
 });
