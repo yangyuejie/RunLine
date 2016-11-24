@@ -1,7 +1,7 @@
 /**
  * Created by yang on 2016/9/4.
  */
-var GameLayer = AdapterScene.extend({
+var GameLayer = cc.Layer.extend({
 
     ctor:function () {
         this._super();
@@ -31,7 +31,7 @@ var GameLayer = AdapterScene.extend({
 });
 
 
-var GameScene = cc.Scene.extend({
+var GameScene = AdapterScene.extend({
     onEnter:function () {
         this._super();
         var layer = new GameLayer();

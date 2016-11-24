@@ -2,7 +2,6 @@
  * Created by CF-BJ-032 on 2016/10/13.
  */
 
-var sa = sa || {};
 sa.LoadScene = cc.Node.extend({
 
     ctor: function () {
@@ -13,7 +12,7 @@ sa.LoadScene = cc.Node.extend({
 sa.LoadScene.preload = function(backFun){
 
     var res = [];
-    for(var i=1; i<=cardNum; i++){
+    for(var i=1; i<=/*cardNum*/2; i++){
         res.push("res/data/level_"+i+".txt");
     }
     var self = this;
@@ -44,6 +43,10 @@ sa.LoadScene.preload = function(backFun){
                 //单元格信息数组
                 ItemInforList.shared().addObject(data[0],data);
             }
+
+            //对象缓存池
+            ObjectPool.shared().createSubItemPools();
+
             backFun();
         });
 

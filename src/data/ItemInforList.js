@@ -13,6 +13,7 @@ var ItemInforList = Singleton_Class(cc.Object, {
 
     ctor: function () {
         this._super();
+        this.targetArr = [];
         this.itemList = new cc.MutableDictionary();
     },
 

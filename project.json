@@ -14,7 +14,9 @@
     "jsList" : [
         "src/resource.js",
         "src/app.js",
+        "src/const/const.js",
         "src/sa/sa.LoadData.js",
+        "src/sa/sa.BaseLayer.js",
 
         "src/ext/extLocal.js",
         "src/ext/js.map.js",
@@ -28,17 +30,17 @@
         "src/scene/gameScene/LevelInfor.js",
         "src/scene/gameScene/GameMenu.js",
 
-        "src/scene/MenuScene.js",
-
+        "src/scene/menuScene/MenuScene.js",
         "src/scene/selectScene/SelectScene.js",
-
-        "src/const/const.js",
+        "src/scene/aboutScene/AboutScene.js",
+        "src/scene/toturialScene/ToturialScene.js",
 
         "src/unit/SubItem.js",
         "src/unit/BaseItem.js",
         "src/unit/Hexagon.js",
         "src/unit/PropItem.js",
 
+        "src/data/ObjectPool.js",
         "src/data/ItemInforList.js"
     ]
 }

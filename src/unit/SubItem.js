@@ -4,6 +4,7 @@
 var SubItem = cc.Node.extend({
     ctor:function () {
         this._super();
+        return true;
     },
 
     //判断添加类型

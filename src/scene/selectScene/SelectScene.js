@@ -2,6 +2,13 @@
  * Created by CF-BJ-032 on 2016/11/7.
  */
 var SelectScene = AdapterScene.extend({
+    onEnter:function () {
+        this._super();
+        var layer = new SelectLayer();
+        this.addChild(layer);
+    }
+});
+var SelectLayer = sa.BaseLayer.extend({
 
     ifMoveing:false,
     ctor:function () {
@@ -44,18 +51,10 @@ var SelectScene = AdapterScene.extend({
     addCardBnt: function(layout,index,num){
         for(var i=0; i<4; i++){
             for(var j=0; j<5; j++){
-                var level = 60*num+index*20+i*5+j;
-                var subItem = new SubItem();
-                //subItem.drowSixEdge(cc.color(200,200,200,200));
-                var color = cc.color(level*2, 255-level*2, 255-level, 255);
-                subItem.drowCircular(20,color);
-                subItem.setPosition(radius+(radius+20)*j,radius+radius*i);
-                subItem.setName("scrollItem_"+level);
-                var colorLabel = cc.color(255*(1-num),255*num,0);
-                subItem.addLabel(colorLabel,""+level);
+                var subItem = ObjectPool.shared().getSubItem();//new SubItem();
                 //注册触摸
-                var touchMove = SelectScene.prototype.touchMoveBack.bind(this);
-                var touchEnd = SelectScene.prototype.touchEndBack.bind(this);
+                var touchMove = SelectLayer.prototype.touchMoveBack.bind(this);
+                var touchEnd = SelectLayer.prototype.touchEndBack.bind(this);
                 GameUtils.addTouchEvent(subItem,touchMove,touchEnd);
                 layout.addChild(subItem);
             }

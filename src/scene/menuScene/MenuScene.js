@@ -4,12 +4,12 @@
 var MenuScene = AdapterScene.extend({
     onEnter:function () {
         this._super();
-        var layer = new MainMenu();
+        var layer = new MainMenuLayer();
         this.addChild(layer);
     }
 });
 
-var MainMenu = cc.Scene.extend({
+var MainMenuLayer = sa.BaseLayer.extend({
 
     ctor:function () {
         this._super();
@@ -55,7 +55,9 @@ var MainMenu = cc.Scene.extend({
             subItem.setTag(i);
             this.addBntLabel(subItem);
             this.addChild(subItem);
-            this.addTouchEvent(subItem);
+            var touchMove = MainMenuLayer.prototype.touchMoveBack.bind(this);
+            var touchEnd = MainMenuLayer.prototype.touchEndBack.bind(this);
+            GameUtils.addTouchEvent(subItem,touchMove,touchEnd);
         }
     },
 
@@ -89,32 +91,30 @@ var MainMenu = cc.Scene.extend({
         subItem.addChild(label);
     },
 
-    //注册触摸事件
-    addTouchEvent: function(subItem){
-        // 屏蔽下层事件
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event){
-                var point = touch.getLocation();
-                var converP = subItem.convertToNodeSpace(point);
-                //判断是否在点击范围之内
-                var rect = cc.rect(-1.7320508075689*50/2,-40,1.7320508075689*50,80);
-                if(cc.rectContainsPoint(rect,converP)){
-                    cc.log("touchBegan......."+subItem.getTag());
+    //监控位置
+    touchMoveBack: function(node){
+    },
 
-                    var selectScene = new SelectScene();
-                    cc.director.pushScene(selectScene);
-                    return true;
-                }
-                return false;
-            },
-            onTouchMoved: function(touch, event){
-                var point = touch.getLocation();
-            },
-            onTouchEnded: function(touch, event){
-            },
-            swallowTouches: false
-        }, subItem);
+    //点击结束回调
+    touchEndBack: function(node){
+        cc.log("tag======" + node.getTag());
+        switch (node.getTag()){
+            case 0:
+                var selectScene = new SelectScene();
+                cc.director.pushScene(selectScene);
+                break;
+            case 1:
+                break;
+            case 2:
+                var toturialScene = new ToturialScene();
+                cc.director.pushScene(toturialScene);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+        //cc.director.pushScene(new GameScene());
     }
 
 });

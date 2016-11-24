@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/11/23 0023.
  */
-var GameMenu = cc.Node.extend({
+var GameMenu = sa.BaseLayer.extend({
 
     ctor:function () {
         this._super();
