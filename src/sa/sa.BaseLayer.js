@@ -8,7 +8,7 @@ sa.BaseLayer = cc.Layer.extend({
         return;
     },
 
-    runSceneById: function(sceneId){
+    changeSceneWithId: function(sceneId){
        switch (sceneId){
            case MAIN_SCENE:
                cc.director.runScene(new MenuScene());

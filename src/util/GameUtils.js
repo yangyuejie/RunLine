@@ -91,7 +91,7 @@ var GameUtils = {
     },
 
     //绘制线段动画
-    drowLineAni: function(target,pointArr){
+    drowLineAni: function(target,pointArr,callBack){
 
         var index = 0;
         var currPoint = pointArr[index];
@@ -99,7 +99,8 @@ var GameUtils = {
         target.schedule(function(){
 
             if(index+1>=pointArr.length){
-                target.unschedule();
+                target.unschedule("drowLine");
+                callBack();
                 return;
             }
             var disX = pointArr[index+1].x-pointArr[index].x;
@@ -118,7 +119,7 @@ var GameUtils = {
                 index++;
             }
 
-        },0.1);
+        },0.1,"drowLine");
     }
 
 };

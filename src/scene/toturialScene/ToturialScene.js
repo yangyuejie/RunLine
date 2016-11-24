@@ -18,7 +18,10 @@ var ToturialLayer = sa.BaseLayer.extend({
         this._super();
 
         //是否有效点击
-        ifEnable = false;
+        this.ifEnable = false;
+
+        //添加菜单按钮
+        this.addBackButton();
 
         //注册触摸事件
         this.addTouchEvent();
@@ -86,11 +89,34 @@ var ToturialLayer = sa.BaseLayer.extend({
         }
     },
 
+    //添加返回按钮
+    addBackButton: function(){
+        var size = cc.winSize;
+
+        var labelGo = new cc.LabelTTF();
+        labelGo.setString("BACK");
+        labelGo.setFontSize(30);
+        labelGo.setColor(cc.color(255,0,0));
+
+        var self = this;
+        var goButton = new cc.MenuItemLabel(labelGo,function () {
+            self.changeSceneWithId(MAIN_SCENE);
+        }, this);
+        goButton.setPosition(cc.p(-size.width/2+radius,size.height/2-radius));
+        var menu = new cc.Menu(goButton);
+        this.addChild(menu);
+    },
+
+    //
+    drowOver: function(){
+        cc.log("drow over....");
+    },
+
     //
     touchBegan: function (pTouch, pEvent) {
         cc.log("on touch began...");
         var pointArr = [cc.p(100,200), cc.p(100,500), cc.p(500,500), cc.p(500,200), cc.p(100,200)];
-        GameUtils.drowLineAni(this,pointArr);
+        GameUtils.drowLineAni(this,pointArr,ToturialLayer.prototype.drowOver.bind(this));
         if(this.ifEnable){
 
         }else{
