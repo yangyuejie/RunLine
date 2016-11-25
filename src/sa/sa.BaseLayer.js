@@ -23,7 +23,7 @@ sa.BaseLayer = cc.Layer.extend({
                cc.director.runScene(new ToturialScene());
                break;
            case ABOUT_SCENE:
-               //cc.director.runScene(new ToturialScene());
+               cc.director.runScene(new AboutScene());
                break;
            case COMMENT_SCENE:
                break;

@@ -104,12 +104,14 @@ var MainMenuLayer = sa.BaseLayer.extend({
                 cc.director.pushScene(selectScene);
                 break;
             case 1:
+
                 break;
             case 2:
                 var toturialScene = new ToturialScene();
                 cc.director.pushScene(toturialScene);
                 break;
             case 3:
+                this.changeSceneWithId(ABOUT_SCENE);
                 break;
             case 4:
                 break;

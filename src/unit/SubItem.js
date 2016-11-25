@@ -28,6 +28,7 @@ var SubItem = cc.Node.extend({
 
         drawNode.drawPoly(point1, color, 4, cc.color(0, 0, 0, 255));
         this.addChild(drawNode);
+        return point1;
     },
 
     //绘制圆形

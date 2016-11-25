@@ -87,6 +87,20 @@ var ToturialLayer = sa.BaseLayer.extend({
         for(var i=0; i<targetArr.length; i++){
             targetArr[i].setVisible(false);
         }
+
+        //执行动作
+        this.scheduleOnce(this.beganToturial,1.0);
+    },
+
+    //开始引导
+    beganToturial: function(dt){
+
+        var targetArr = ItemInforList.shared().getTargetArr();
+        for(var i=0; i<targetArr.length; i++){
+            var base = targetArr[i].getParent();
+            var pointArr = base.getPointArr();
+            GameUtils.drowLineAni(base,pointArr,ToturialLayer.prototype.drowOver.bind(this));
+        }
     },
 
     //添加返回按钮
@@ -115,8 +129,6 @@ var ToturialLayer = sa.BaseLayer.extend({
     //
     touchBegan: function (pTouch, pEvent) {
         cc.log("on touch began...");
-        var pointArr = [cc.p(100,200), cc.p(100,500), cc.p(500,500), cc.p(500,200), cc.p(100,200)];
-        GameUtils.drowLineAni(this,pointArr,ToturialLayer.prototype.drowOver.bind(this));
         if(this.ifEnable){
 
         }else{

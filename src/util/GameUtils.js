@@ -93,6 +93,8 @@ var GameUtils = {
     //绘制线段动画
     drowLineAni: function(target,pointArr,callBack){
 
+        var node = new cc.Node();
+        target.addChild(node);
         var index = 0;
         var currPoint = pointArr[index];
 
@@ -100,6 +102,7 @@ var GameUtils = {
 
             if(index+1>=pointArr.length){
                 target.unschedule("drowLine");
+                target.removeChild(node);
                 callBack();
                 return;
             }
@@ -112,7 +115,8 @@ var GameUtils = {
 
             var drawLine = new cc.DrawNode();
             drawLine.drawSegment(currPoint, nextPoint, 2, cc.color(255, 0, 0, 255));
-            target.addChild(drawLine);
+            node.addChild(drawLine);
+           // target.addChild(node);
             currPoint = nextPoint;
 
             if(currPoint.x==pointArr[index+1].x && currPoint.y==pointArr[index+1].y){

@@ -7,6 +7,9 @@ var Hexagon = BaseItem.extend({
     //附加unit
     attachArr:[],
 
+    //轮廓定点坐标数组
+    pointArr:[],
+
     //关联指针
     left:null,
     right:null,
@@ -19,6 +22,7 @@ var Hexagon = BaseItem.extend({
 
         this._super();
         this.attachArr = [];
+        this.pointArr = [];
         this.setRotation(30);
     },
 
@@ -55,7 +59,7 @@ var Hexagon = BaseItem.extend({
     drowPolygon: function(){
         var color = this.getItemColor();
         var subItem = new SubItem();
-        subItem.drowSixEdge(color);
+        this.pointArr = subItem.drowSixEdge(color);
         this.addChild(subItem);
     },
 
@@ -186,6 +190,11 @@ var Hexagon = BaseItem.extend({
         var seq = cc.sequence(cc.scaleTo(0.25,1.1),cc.scaleTo(0.25,1));
         this.runAction(seq);
 
+    },
+
+    //获取轮廓顶点数组
+    getPointArr: function(){
+        return this.pointArr;
     }
 
 });
