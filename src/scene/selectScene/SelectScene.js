@@ -32,14 +32,22 @@ var SelectLayer = sa.BaseLayer.extend({
         var winSize = cc.director.getWinSize();
         var pageView = new ccui.PageView();
         pageView.setTouchEnabled(true);
-        pageView.setContentSize(cc.size(radius*7, radius*6));
-        pageView.setPosition(cc.p(radius,winSize.height/2+(index-1)*radius*5));
+        pageView.setContentSize(cc.size(radius*7, radius*4));
+        if(index>0){
+            pageView.setPosition(cc.p(radius,winSize.height/2+radius/2));
+        }else{
+            pageView.setPosition(cc.p(radius,winSize.height/2-radius*5+radius/2));
+        }
+
         //设置触发滚动距离
         pageView.setCustomScrollThreshold(30);
 
         for (var i = 0; i < 3; ++i) {
             var layout = new ccui.Layout();
             layout.setContentSize(radius*6,radius*5);
+            layout.setBackGroundColor(cc.color.GREEN);
+            layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+            layout.setBackGroundColorOpacity(100);
             this.addCardBnt(layout,i,index);
             pageView.addPage(layout);
         }
