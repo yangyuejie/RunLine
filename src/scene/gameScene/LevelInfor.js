@@ -64,21 +64,25 @@ var LevelInfor = cc.Node.extend({
     addSkillItem: function(array){
 
         for(var i=0; i<4; i++){
-            var unit = new PropItem();
-            unit.initPropData(array[9][i]);
-            unit.drowPolygon();
-            unit.addSubItem();
-            if(i<=1){
-                unit.storeInitialPos(cc.p(radius*(i+1),radius));
-            }else{
-                unit.storeInitialPos(cc.p(cc.winSize.width-radius*(4-i),radius));
+            var num = parseInt(array[9 + i][1]);
+            for (var j = 0; j < num; j++) {
+                var unit = new PropItem();
+                unit.initPropData(array[9 + i]);
+                unit.drowPolygon();
+                unit.addSubItem();
+                if (i <= 1) {
+                    unit.storeInitialPos(cc.p(radius * (i + 1), radius));
+                } else {
+                    unit.storeInitialPos(cc.p(cc.winSize.width - radius * (4 - i), radius));
+                }
+                this.addChild(unit);
+                //注册触摸键听
+                var touchMove = LevelInfor.prototype.touchMoveBack.bind(this);
+                var touchEnd = LevelInfor.prototype.touchEndBack.bind(this);
+                GameUtils.addTouchEvent(unit, touchMove, touchEnd);
+                this.propArray.push(unit);
             }
-            this.addChild(unit);
-            //注册触摸键听
-            var touchMove = LevelInfor.prototype.touchMoveBack.bind(this);
-            var touchEnd = LevelInfor.prototype.touchEndBack.bind(this);
-            GameUtils.addTouchEvent(unit,touchMove, touchEnd);
-            this.propArray.push(unit);
+
         }
     },
 

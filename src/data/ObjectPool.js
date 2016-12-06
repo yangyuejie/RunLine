@@ -24,7 +24,7 @@ var ObjectPool = Singleton_Class(cc.Object, {
                         var subItem = new SubItem();
                         var color = cc.color(level*2, 255-level*2, 255-level, 255);
                         subItem.drowCircular(20,color);
-                        subItem.setPosition(radius+(radius+20)*j,radius*i);
+                        subItem.setPosition(radius + (radius + 20) * j, radius * (i + 0.5));
                         subItem.setName("scrollItem_"+level);
 
                         var colorLabel = cc.color(255*(1-n),255*n,0);

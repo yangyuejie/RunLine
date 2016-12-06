@@ -57,6 +57,7 @@ var RelationItem = cc.Node.extend({
                 indexID++;
             }
             this.itemArray.push(array.reverse());
+            // this.itemArray.push(array);
             if(j>halfNum){
 
             }else{
@@ -72,6 +73,7 @@ var RelationItem = cc.Node.extend({
             }
             highNum++;
         }
+        this.itemArray.reverse();
     },
     //设置关联性
     setRelation: function(){
